@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Frame Selection</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      background-color: #CFD5EE; 
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .container {
+      background-color: white;
+      border-radius: 15px;
+      padding: 50px;              
+      box-shadow: 0px 6px 15px rgba(0,0,0,0.15);
+      width: 95%;                  
+      max-width: 1250px;          
+      height: 700px;          
+      display: flex;
+      flex-direction: column;
+      align-items: center;      
+    }
+
+    p {
+      font-size: 43px;
+      margin-top: -20px;
+      font-family: Quicksand;
+      font-weight: bold;
+    }
+
+.top-row{
+   margin-top: -10px;
+    }
+
+.bottom-row {
+  margin-top: 75px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-self: flex-start;
+  padding-left: 155px;
+}
+
+
+.top-row {
+      display: flex;
+      justify-content: center;
+      gap: 90px;
+    }
+
+.frame-container {
+  background-color: #f5f3fb; 
+  padding: 10px;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  transition: 0.3s;
+  cursor: pointer;
+  box-shadow: 2px 4px 6px rgba(0,0,0,0.1);
+  width: 400px; 
+  height: 250px;
+
+ 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+ .frame-container:hover {
+  transform: scale(1.05);
+  }
+
+.frame-container.selected {
+      border: 2px solid #4a90e2; 
+      background-color: white;
+      box-shadow: 0px 6px 12px rgba(0,0,0,0.15);
+    }
+
+ .frame {
+  padding: 0;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 6px;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: flex-end; 
+  width: 100%;
+  position: relative;
+  right: 2%;
+  bottom: 0%;  
+}
+
+.next-btn {
+  padding: 18px 55px;       
+  background-color: #EAF2FE;
+  border: none;
+  border-radius: 30px;      
+  font-size: 22px;         
+  cursor: pointer;
+  box-shadow: 5px 5px 0px #CFD5EE;
+  transition: 0.3s;
+  font-family: Lexend;
+  width: 240px;
+  margin-top: -70px;
+  height: 70px;
+}
+
+    .next-btn:hover {
+      background-color: #CFD5EE;
+    }
+
+    .next-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+
+
+<body>
+  <div class="container">
+    <p>Choose a Template</p>
+
+<div class="top-row">
+  <div class="frame-container" onclick="selectFrame(this, ' /camera?template=1')">
+    <img src="{{ url_for('static', filename='Images/templates/Template1.png') }}" alt="Frame 1" class="frame">
+  </div>
+
+  <div class="frame-container" onclick="selectFrame(this, '/camera?template=2')">
+    <img src="{{ url_for('static', filename='Images/templates/Template2.png') }}" alt="Frame 2" class="frame">
+  </div>
+</div>
+
+<div class="bottom-row">
+  <div class="frame-container" onclick="selectFrame(this, '/camera?template=3')">
+    <img src="{{ url_for('static', filename='Images/templates/Template3.png') }}" alt="Frame 3" class="frame">
+  </div>
+</div>
+
+
+    <div class="btn-container">
+      <button class="next-btn" id="nextBtn" disabled onclick="goNext()">Next</button>
+    </div>
+
+</div>
+
+<script>
+  let selectedFrame = null;
+  let nextPage = "";
+
+  function selectFrame(container, page) {
+    document.querySelectorAll('.frame-container').forEach(frame => {
+      frame.classList.remove('selected');
+    });
+
+    container.classList.add('selected');
+    selectedFrame = container;
+    nextPage = page;
+
+    const templateMatch = page.match(/template=(\d+)/);
+    if (templateMatch) {
+      const templateNumber = templateMatch[1];
+      localStorage.setItem("templateChoice", templateNumber);
+      console.log("Saved templateChoice:", templateNumber);
+    }
+
+    document.getElementById("nextBtn").disabled = false;
+  }
+
+  function goNext() {
+    if (nextPage) {
+      window.location.href = nextPage;
+    }
+  }
+</script>
+
+
+</body>
+</html>

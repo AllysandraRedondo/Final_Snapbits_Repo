@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+  <title>Rate Experience</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fffef7;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: radial-gradient(circle, rgba(173, 205, 246, 3) 0%, rgba(255, 255, 255, 2) 100%);
+    }
+
+    .card {
+      background: #FFFFFF;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+      text-align: center;
+           justify-content: center;
+      align-items: center;
+      width: 680px;
+      height: 400px;
+    }
+
+    h2 {
+      font-size: 40px;
+      margin-bottom: 10px;
+      font-family: Lexend;
+    }
+
+    .stars {
+      padding: -10px;
+      justify-content: center;
+      gap: 10px;
+      font-size: 88px;
+      cursor: pointer;
+      margin-top: 50px;
+    }
+
+    .star {
+      padding-top: -20px;
+      color: #ccc;
+      transition: color 0.3s;
+    }
+
+    .star.hover,
+    .star.selected {
+      color: #FFD700; 
+    }
+
+    button {
+      font-family: "Poppins", sans-serif;
+      font-weight: 600;
+      padding:20px;
+      border-radius: 10px;
+      border: none;
+      width: 550px;
+      background-color: #1E3A8A;
+      color: white;
+      font-size: 25px;
+      margin-top: 20px;
+    }
+
+    button:active {
+    background-color: #031033;
+    transform: translateY(2px);
+}
+
+    h2 {
+      font-family: "Poppins", sans-serif;
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+  <div class="card">
+    <div class="stars">
+      <h2>Rate your experience!</h2>
+      <span class="star" data-rating="1">&#9733;</span>
+      <span class="star" data-rating="2">&#9733;</span>
+      <span class="star" data-rating="3">&#9733;</span>
+      <span class="star" data-rating="4">&#9733;</span>
+      <span class="star" data-rating="5">&#9733;</span>
+    </div>
+      <br>
+      <button onclick="submit_Feedback()">Submit</button>
+  </div>
+
+
+
+<script>
+    let rating = 0;
+
+    const stars = document.querySelectorAll('.star');
+    
+    stars.forEach(star => {
+      star.addEventListener('click', function() {
+        rating = parseInt(this.getAttribute('data-rating'));
+        console.log('Selected rating: ', rating);
+
+        stars.forEach(s => {
+          if (s.getAttribute('data-rating') <= rating) {
+            s.style.color = 'gold';
+          } else {
+            s.style.color = '#ccc';
+          }
+        })
+      });
+      });
+
+    function submit_Feedback() {
+      if (rating == 0 ) {
+        alert('Please select a rating!');
+        return;
+      } else { 
+        fetch('/submit-feedback', {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json'
+          }, 
+          body: JSON.stringify({
+            rating: rating
+          })
+        })
+        .then(response => response.json())
+        .then(data=> {
+          console.log(data)
+          window.location.href = '/email';
+        })
+        .catch(error => {
+          console.log('Error: ', error)
+          alert('Something went wrong');
+        });
+      }
+
+    }
+    function resetStars() {
+      stars.forEach(star => star.classList.remove('hover'));
+    }
+</script>
+
+</body>
+</html>

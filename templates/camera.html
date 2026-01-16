@@ -1,0 +1,2412 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Step 1: Capture Photos</title>
+    <link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lobster&family=Mitr:wght@200;300;400;500;600;700&family=Mohave:ital,wght@0,300..700;1,300..700&family=Molle&family=Pacifico&family=Lexend:wght@100;200;300;400;500;600;700;800;900& display=swap"
+      rel="stylesheet">
+
+    <style>
+  * {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #DFEBFD;
+    overflow: hidden;
+    margin: 0;
+  }
+
+  .all_content {
+    position: relative;
+    transition: transform 0.3s ease-in-out;
+    transform-origin: right center;
+  }
+
+  .all {
+    background-color: white;
+    border-radius: 20px;
+    width: 1450px;
+    height: 800px;
+    padding-top: 20px;
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s ease-in-out;
+    transform-origin: right center;
+  }
+
+  .stars {
+    position: absolute;
+    pointer-events: none;
+    width: 100%;
+    gap: 20px;
+    z-index: 10;
+    transition: opacity 0.2s ease-in-out;  
+    opacity: 1; 
+  }
+
+  .star p {
+    font-size: 40px;
+  }
+
+  .star.one { margin-left: 20px; margin-top: 80px; }
+  .star.two { margin-left: 1395px; margin-top: 300px; }
+  .star.three { margin-left: 20px; margin-top: 150px; }
+
+  .cat {
+    position: absolute; 
+    bottom: -10px;         
+    right: 20px;      
+    z-index: 100;       
+      transition: opacity 0.2s ease-in-out; 
+  }
+
+  .catblush {
+    width: 120px;       
+    height: auto;
+  }
+  .menu-open .cat {
+    opacity: 0;
+  }
+
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    padding-bottom: 15px;
+    margin-top: 30px;
+  }
+
+  .number {
+    font-size: 35px;
+    color: black;
+    margin-left: 450px;
+    height: 75px;
+    width: 75px;
+    border-radius: 50%;
+    background-color: #F6F7FB;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Lisu Bosa;
+    margin-top: -10px;
+      transition: margin 0.3s ease;
+
+  }
+
+  .center-text {
+    text-align: center;
+    font-family: Pacifico;
+    font-size: 60px;
+    margin-left: -250px;
+  }
+
+  .right {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    margin-right: 60px;
+  }
+
+  .help {
+    background-color: white;
+    font-size: 55px;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke-width: 1px;
+  font-family: "Lexend", sans-serif;
+    cursor: pointer;
+    transition: opacity 0.3s ease-in-out; 
+  }
+
+  .menu-open .help {
+    opacity: 0;
+  }
+
+  .menu-hide .help {
+    opacity: 1;
+  }
+
+
+  .menu {
+    cursor: pointer;
+    background-color: #697D9B;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .menu div {
+    height: 6px;
+    background-color: white;
+    margin: 4px 0;
+    width: 50px;
+    border-radius: 100px;
+  }
+
+/* ------------SIDE MENU--------------- */
+  .sidemenu {
+    position: fixed;
+    top: 0;
+    right: -750px;
+    width: auto; 
+    height: 100%;
+    background: none; 
+    transition: right 0.3s ease-in-out;
+    z-index: 2000;
+  }
+/* -------------------------YUNG PANG EXIT----------------------------- */
+  .semicircle {
+    width: 110px;
+    height: 90px;
+    background: #697D9B;
+    border-radius: 100px 0 0 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: flex-start; 
+  }
+  .semicircle button {
+    width: 80px;
+    height: 80px;
+    background-color: #697D9B;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .semicircle img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+  }
+  .side-wrapper {
+    display: flex;
+    align-items: flex-start; 
+    height: 100%;
+  }
+
+/* -------------------------YUNG AI AT BG AND CAMERA EFFECT----------------------------- */
+
+  .content {
+    width: 600px;
+    height: 100%;
+    background-color: #697D9B;
+    padding: 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+/* ------------------------- BG AND CAMERA EFFECTS----------------------------- */
+
+      .design {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin-top: 70px;
+        gap: 40px;
+      }
+/* ------------------------- CAROUSEL ----------------------------- */
+
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        max-width: 600px;
+        position: relative;
+      }
+
+      .swiper {
+        width: 80%;
+        max-width: 500px;
+        margin-bottom: 35px;
+      }
+
+      .swiper-slide {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .swiper-slide button {
+        background: none;
+        border: white;
+        padding: 0;
+        cursor: pointer;
+              width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 50%;
+        transition: transform 0.3s ease;
+      }
+      
+
+      .swiper-slide img{
+        object-fit: contain;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+
+      }
+
+      .swiper-slide img:hover {
+        border: 2px solid #2196f3;
+      }
+
+/* ------------------------- NEXT FOR PREVIEW ----------------------------- */
+
+      .swiper-button-prev, .swiper-button-next {
+        width: 80px;
+        height: 80px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem;
+        color: wheat;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
+        margin-top: -20px;
+      }
+      .swiper-button-prev i{
+          margin-left: 80px;
+      }
+      .swiper-button-next i {
+          margin-right: 80px;
+      }
+      .swiper-button-prev i,
+      .swiper-button-next i {
+        font-size: 4rem;
+        color: wheat;
+      }
+
+
+      .swiper-button-prev {
+        left: -70px; 
+      }
+
+      .swiper-button-next {
+        right: -70px; 
+      }
+
+      .swiper-button-prev::after, .swiper-button-next::after {
+        display: none;
+      }
+
+      .bg-txt p {
+          font-size: 30px;
+          margin-left: 20px;
+          margin-bottom: 25px;
+          margin-top: 20px;
+      }
+
+/* ------------------------- AI----------------------------- */
+/* ---------- PREVIEW------------- */
+          .preview{
+          margin-top: 30px;
+      }
+          .output{
+              width: 500px;
+              height: 250px;
+              background-color: white;
+                  place-items: center;
+                      aspect-ratio: 1/1;
+                        position: relative;
+              margin-left: 30px;
+                  display: grid;
+      place-items: center;
+              
+          }
+          .preview-button{
+              margin-left: 350px;
+              margin-top: 20px;
+          }
+          .skeleton{
+              position: absolute;
+              inset: 0;
+              background: linear-gradient(90deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+              background-size: 200% 100%;
+              animation: shimmer 1.4s infinite;
+          }
+              .view-button{
+                  width: 150px;
+                  height: 50px;
+                  background-color: EAF2FE;
+                  border-radius: 100px;
+              }
+/* ----------YUNG PANG PROMPT------------- */          
+      .ai-prompt{
+          margin-top: 30px;
+      }
+          .ai-center{
+              display: flex;
+              justify-content: center;
+              align-items: center;
+                  }
+
+                  .prompt{
+                  background-color: white;
+                  width: 500px;
+                  height: 100px;
+                  border-radius: 20px;
+                  margin-top: 50px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  padding: 15px;
+                  resize: none; 
+                    border: none;
+                  }
+                  .prompt:focus {
+                    outline: none;
+                    border: none;
+                  }
+
+          .ai-button{
+              margin-left: 350px;
+              margin-top: 20px;
+          }
+              .prompt-button{
+                  width: 150px;
+                  height: 50px;
+                  background-color: EAF2FE;
+                  border-radius: 100px;
+              }
+
+
+/* -----------------------YUNG CAMERA---------------------------- */
+.cameraContainer {
+    margin-top: -20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    overflow: hidden;
+    position: relative; 
+    transition: all 0.3s ease-in-out;
+}
+
+.cameraContainer img {
+    width: 1150px;
+    height: 610px;
+    border-radius: 20px;
+    border: 2px solid black;
+    object-fit: cover;
+    transition: all 0.3s ease-in-out;
+    transform-origin: right center;
+}
+
+.shutter-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1150px;      
+    height: 610px;      
+    background: rgba(0,0,0,0.8);
+    opacity: 0;
+    pointer-events: none;
+    border-radius: 20px; 
+    transition: opacity 0.1s ease-in-out;
+    transform: translate(-50%, -50%); 
+}
+
+
+.menu-open .cameraContainer img {
+    width: 800px;
+    height: 500px;
+}
+
+
+.menu-open .shutter-overlay {
+    width: 800px;
+    height: 500px;
+    border-radius: 20px;
+    transform: translate(-50%, -50%); 
+}
+
+.menu-open .number{
+margin-top: -130px;
+}
+.menu-open .timer{
+margin-top: 5px;
+}
+
+.menu-open #previewContainer{
+margin-top: -100px;
+margin-left: 20px;
+
+}
+
+  .menu-open .all_content {
+    transform: translateX(-300px);
+  }
+
+  .menu-open .all {
+    width: 880px;
+    height: 650px;
+  }
+  .menu-open .stars {
+    opacity: 0;
+  }
+
+  .menu-hide .stars {
+    opacity: 1;
+  }
+
+  .menu-hide .all_content,
+  .menu-hide {
+    transform: translateX(0);
+  }
+
+  .popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0; 
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+  /* smooth fade */
+  }
+
+
+  .pop {
+    background-color: #fffef7;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    overflow: hidden;
+        transition: all 0.3s ease-in-out;
+
+  }
+
+  /* Everything below stays the same */
+  .pop p {
+    font-size: 55px;
+    margin-bottom: 25px;
+    font-family: Pacifico;
+  }
+
+  .carousel-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 900px;
+    height: 550px;
+    border-radius: 25px;
+    background: white;
+    box-shadow: 0 0 55px 20px rgba(255, 230, 100, 0.55);
+  }
+
+  .carousel {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 25px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .carousel img {
+    width: 900px;
+    height: 550px;
+    border-radius: 25px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: opacity 0.6s ease;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .carousel img.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 75px;
+    font-family: Pacifico;
+    cursor: pointer;
+    z-index: 2;
+    color: #FFC58B;
+  }
+
+  .arrow.left { left: -100px; }
+  .arrow.right { right: -160px; }
+
+  .bottom-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    margin-top: 40px;
+    padding-bottom: 30px;
+  }
+
+  .dots {
+    display: flex;
+    gap: 14px;
+    padding-right: 300px;
+    margin-left: 450px;
+  }
+
+  .dot {
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background-color: black;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+
+  .dot.active {
+    background-color: gray;
+    transform: scale(1.3);
+  }
+
+  .okay-btn {
+    background-color: #fffecf;
+    border: none;
+    border-radius: 30px;
+    padding: 18px 55px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    color: black;
+    box-shadow: 3px 6px 12px rgba(0, 0, 0, 0.25);
+    transition: 0.3s;
+    margin-right: -70px;
+  }
+
+  .okay-btn:hover {
+    background-color: #fff9a3;
+  }
+
+/* -------------------------------------------LOADING------------------------------------------------ */
+    .loading {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at center, #d9f0ff, #a8d8f0, #82bde6);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                  z-index: 9999;
+                position: fixed;     
+    width: 100%;        
+    height: 100%;
+    }
+
+
+    .loading-card {
+      background: #ffffff;
+      border-radius: 25px;
+      padding: 70px 80px; 
+      box-shadow:
+        25px 25px 60px rgba(0,0,0,0.12),
+        inset 0 0 50px rgba(138, 173, 221, 0.18);
+      text-align: center;
+      width: 600px;  
+    }
+
+    
+    .loading-card h1 {
+      font-weight: 700;
+      font-size: 2.5rem; 
+      margin-bottom: 40px;
+      color: #222;
+    }
+
+
+    .loading-card img {
+      height: 180px; 
+      margin-bottom: 40px;
+      user-select: none;
+    }
+
+    
+    .progress-bar-container {
+      background-color: #cce1ff;
+      border-radius: 20px;
+      height: 30px; 
+      width: 100%;
+      overflow: hidden;
+    }
+
+
+    .progress-bar {
+      background: linear-gradient(90deg, #6fa8dc, #3d85c6);
+      height: 100%;
+      width: 0;
+      border-radius: 20px;
+      transition: width 0.2s ease;
+    }
+
+            .countdown{
+              position: absolute; 
+              top: 53%; left: 50%; 
+              transform: translate(-50%, -50%); 
+              font-size: 350px; 
+              font-weight: bold; 
+              color: white; 
+              display: none; 
+              z-index: 3000;
+              opacity: 50%;
+            }
+/* -----------------------------YUNG DROPDOWN (START)----------------------------------- */
+.dropdown_sticker,
+.dropdown_effects {
+  position: relative;
+}
+/* 🟡 Main Button */
+.dropdown_button {
+  background: #EBEFFF;
+  color: #333;
+  border: none;
+  padding: 0 25px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 500px;
+  border-radius: 60px;
+  font-family: "Lexend", sans-serif;
+  gap: 20px;
+  height: 60px;
+}
+
+.triangle {
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 12px solid black;
+  z-index: 10;
+} 
+
+.dropdown_content.background{
+  background: #EBEFFF;
+}
+.dropdown_content.effects{
+  background: #EBEFFF;
+}
+
+.dropdown_content {
+  display: none;
+  border-radius: 20px;
+  padding: 15px;
+  margin-top: 0px;
+  animation: fadeIn 0.2s ease;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  height: 250px;
+  width: 470px;
+  overflow: hidden; 
+}
+
+.dropdown_content.show {
+  display: flex;
+  flex-direction: column;
+}
+.dropdown_button.active{
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  width: 470px;
+  margin-bottom: -20px;
+}
+
+.sticker-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  background: white;
+  border: none;
+  border-radius: 25px;
+  padding: 6px 15px;
+  font-family: "Lexend", sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.btn.active {
+  background: #333;
+  color: white;
+}
+
+.sticker-scroll {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 5px;
+}
+
+.sticker-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.sticker-scroll::-webkit-scrollbar-thumb {
+  background: #aaa;
+  border-radius: 8px;
+}
+
+#backgroundWrapper h4 {
+  font-size: 16px;
+  text-align: left;
+  margin: 5px 0;
+}
+
+#effectsWrapper {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  width: 100% !important;
+}
+
+#effectsWrapper h4 {
+  font-size: 16px;
+  text-align: left;
+  margin: 5px 0;
+}
+
+.sticker-grid {
+  display: grid; 
+  grid-template-columns: repeat(4, 1fr); 
+  gap: 20px;
+  padding: 0px 0px 10px 10px;
+}
+
+/* 🐾 Stickers */
+.sticker-grid img {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  background: white;
+  padding: 5px;
+  object-fit: contain;
+  cursor: pointer;
+  border: 1px solid #ccc;
+}
+.bg-btn{
+    width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  object-fit: contain;
+  cursor: pointer;
+  border: 1px solid #ccc;
+}
+
+.remove-effect-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  font-family: "Lexend", sans-serif;
+  font-size: 14px;
+    width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  cursor: pointer;
+    border: 1px solid #ccc;
+}
+
+/* ----------------------------- DROPDOWN (END)----------------------------------- */
+
+ /* ----------------------------- VIRTUAL KEYBOARD STYLES ----------------------------------- */
+.virtual-keyboard-container {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: #1f1f1f;
+  border-radius: 14px;
+  box-shadow: 0 6px 30px rgba(0,0,0,0.5);
+  z-index: 9999;
+  width: 550px;
+  cursor: grab;
+}
+
+.vk-header {
+  background: #333;
+  color: white;
+  font-weight: bold;
+  padding: 12px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+  cursor: grab;
+}
+
+.vk-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.virtual-keyboard {
+  padding: 15px;
+  background: #222;
+  border-bottom-left-radius: 14px;
+  border-bottom-right-radius: 14px;
+}
+
+.vk-row {
+  display: flex;
+  justify-content: center;
+  margin: 6px 0;
+}
+
+.vk-key {
+  background: #444;
+  color: white;
+  border: none;
+  padding: 16px 20px;
+  margin: 4px;
+  border-radius: 10px;
+  font-size: 18px;
+  cursor: pointer;
+  min-width: 45px;
+  transition: 0.15s;
+}
+
+.vk-key:hover {
+  background: #666;
+}
+
+.vk-key.wide {
+  min-width: 200px;
+}
+
+.vk-key.toggle, .vk-key.shift {
+  background: #555;
+  font-weight: bold;
+}
+
+.hidden { display: none; }
+
+.flash {
+    background-color: #ffcccc !important;
+    transition: background-color 0.2s ease;
+}
+
+
+/* ----------------------------- QR CODE ----------------------------------- */
+  .side-btn {
+      background-color: #EBEFFF;
+      border: none;
+      border-radius: 50px; 
+      padding: 14px 32px; 
+      font-size: 18px;
+      cursor: pointer;
+      transition: 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px; 
+       font-family: "Lexend", sans-serif;
+    }
+
+    .side-btn:hover {
+      background-color: #EBEFFF;
+      transform: scale(1.05); 
+    }
+
+    .side-btn i {
+      font-size: 20px; 
+    }
+#previewContainer {
+  position: absolute;
+  top: 10px;
+  left: 200px; 
+  width: 175px; 
+  height: 130px;
+  z-index: 500;
+    border: black 2px solid;
+  background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+  cursor: pointer;
+        transition: margin 0.3s ease;
+
+}
+
+.preview-image {
+  position: absolute;
+  background-size: cover;
+  background-position: center;
+    transform: scaleX(-1);
+    border-radius: 6px;
+
+}
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle, #C4D1FF 30%, #FFFFFF 70%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+    font-family: 'Lexend', sans-serif;
+
+}
+
+.popup-box {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 750px;
+  text-align: center;
+}
+.popup-box h1{
+  margin-top: -5px;
+}
+.popup-preview {
+  position: relative;
+  width: 720px;
+  height: 460px;
+  margin: 10px auto;
+  background: #eee;
+  border-radius: 10px;
+}
+
+.popup-preview .preview-image {
+  position: absolute;
+  width: 320px;
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+  transform: scaleX(-1); 
+}
+
+.popup-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+.popup-actions button{
+  width: 150px;
+  height: 50px;
+  cursor: pointer;
+  border-radius: 20px;
+  border: 2px dashed #482A41;
+  font-size: 16px;
+  color: #482A41;
+    text-align: center;
+}
+.btn1{
+background: linear-gradient(to bottom, #C4D1FF 40%, #FFFFFF 90%);
+margin-left: 30px;
+}
+.btn2{
+background: linear-gradient(to bottom, #FFD5DE 40%, #FFFFFF 90%);
+margin-right: 30px;
+}
+
+</style>
+
+</head>
+
+<body>
+<!---------------- Preview Confirmation Popup ----------->
+    <div id="previewPopup" class="popup-overlay" style="display:none;">
+      <div class="popup-box">
+        <h1>Photo Preview</h1>
+
+        <div id="popupPreview" class="popup-preview"></div>
+
+        <p>Are you satisfied with these photos?</p>
+
+        <div class="popup-actions">
+          <button class="btn1" id="btnNo">No</button>
+          <button class="btn2" id="btnYes">Yes</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="all_content" id="all" style="display: none;">
+
+      <div class="all">
+        <div id="previewContainer" class="preview-image"></div>
+        <div class="stars">
+          <div class="star one"><p>⟡</p></div>
+          <div class="star two"><p>✧</p></div>
+          <div class="star three"><p>⟢</p></div>
+        </div>
+        <div class="cat">
+          <img src="{{ url_for('static', filename='Images/catblush.png') }}"
+            class="catblush">
+        </div>
+        <div class="top">
+          <div class="left">
+            <div class="number" id="photoCounter">0/0</div>
+          </div>
+          <div class="top-center">
+            <p class="center-text">Look Here!</p>
+          </div>
+          <div class="right">
+            <div class="reminder">
+              <div class="help" onclick="showPopup()">?</div>
+            </div>
+            <div class="menu" onclick="show()">
+              <div class="menu line one"></div>
+              <div class="menu line two"></div>
+              <div class="menu line three"></div>
+            </div>
+          </div>
+        </div>
+        
+<!------------- CAMERA -------------->
+        <div class="center">
+          <div class="cameraContainer">
+            <img id="img" src="{{ url_for('video_feed') }}"
+              alt="USB Webcam Feed">
+            <div id="countdown" class="countdown"></div>
+            <div class="shutter-overlay" id="shutter"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+<!--------------- SIDE MENU ------------>
+    <div class="right-content">
+      <div class="sidemenu" id="sidemenu">
+        <div class="side-wrapper">
+          <div class="semicircle">
+            <button class="exit" onclick="hide()"><img
+                src="{{ url_for('static', filename='Images/reject.png') }}"></button>
+          </div>
+          <div class="content">
+            <div class="preview">
+              <div class="output" id="output">
+                <div class="picture">Your Generated Image will appear
+                  here.</div>
+              </div>
+              <div class="preview-button">
+                <button class="view-button">Apply</button>
+              </div>
+            </div>
+            <div class="ai-prompt">
+              <div class="ai-center">
+                <div class="ai">
+                  <textarea class="prompt" id="prompt"
+                    placeholder="e.g a cat astronoaut playing guitar on moon, cinematic lighting, ultra detailed"></textarea>
+                </div>
+              </div>
+              <div class="ai-button">
+                <button class="prompt-button" id="generate">Generate</button>
+              </div>
+            </div>
+
+            <div class="design">
+
+<!---------------------- VIRTUAL KEYBOARD -------------------->
+              <div id="virtualKeyboardContainer"
+                class="virtual-keyboard-container hidden">
+                <div id="virtualKeyboardHeader" class="vk-header">
+                  <span>Virtual Keyboard</span>
+                  <button class="vk-close" id="vkCloseBtn">✕</button>
+                </div>
+
+                <div id="virtualKeyboard" class="virtual-keyboard">
+                  <div class="vk-layout" id="lettersLayout">
+                    <div class="vk-row">
+                      <button class="vk-key">q</button><button
+                        class="vk-key">w</button><button
+                        class="vk-key">e</button>
+                      <button class="vk-key">r</button><button
+                        class="vk-key">t</button><button
+                        class="vk-key">y</button>
+                      <button class="vk-key">u</button><button
+                        class="vk-key">i</button><button
+                        class="vk-key">o</button><button
+                        class="vk-key">p</button>
+                    </div>
+                    <div class="vk-row">
+                      <button class="vk-key">a</button><button
+                        class="vk-key">s</button><button
+                        class="vk-key">d</button>
+                      <button class="vk-key">f</button><button
+                        class="vk-key">g</button><button
+                        class="vk-key">h</button>
+                      <button class="vk-key">j</button><button
+                        class="vk-key">k</button><button
+                        class="vk-key">l</button>
+                    </div>
+                    <div class="vk-row">
+                      <button class="vk-key shift"
+                        data-action="shift">⇧</button>
+                      <button class="vk-key">z</button><button
+                        class="vk-key">x</button><button
+                        class="vk-key">c</button>
+                      <button class="vk-key">v</button><button
+                        class="vk-key">b</button><button
+                        class="vk-key">n</button><button
+                        class="vk-key">m</button>
+                      <button class="vk-key" data-action="backspace">⌫</button>
+                    </div>
+                    <div class="vk-row">
+                      <button class="vk-key wide"
+                        data-action="space">Space</button>
+                      <button class="vk-key" data-action="enter">Enter</button>
+                      <button class="vk-key toggle"
+                        data-toggle="symbols">123</button>
+                    </div>
+                  </div>
+
+                  <div class="vk-layout hidden" id="symbolsLayout">
+                    <div class="vk-row">
+                      <button class="vk-key">1</button><button
+                        class="vk-key">2</button><button
+                        class="vk-key">3</button>
+                      <button class="vk-key">4</button><button
+                        class="vk-key">5</button><button
+                        class="vk-key">6</button>
+                      <button class="vk-key">7</button><button
+                        class="vk-key">8</button><button
+                        class="vk-key">9</button><button
+                        class="vk-key">0</button>
+                    </div>
+                    <div class="vk-row">
+                      <button class="vk-key">!</button><button
+                        class="vk-key">@</button><button
+                        class="vk-key">#</button>
+                      <button class="vk-key">$</button><button
+                        class="vk-key">%</button><button
+                        class="vk-key">^</button>
+                      <button class="vk-key">&</button><button
+                        class="vk-key">*</button><button
+                        class="vk-key">(</button><button
+                        class="vk-key">)</button>
+                    </div>
+                    <div class="vk-row">
+                      <button class="vk-key">-</button><button
+                        class="vk-key">_</button><button
+                        class="vk-key">=</button>
+                      <button class="vk-key">+</button><button
+                        class="vk-key">[</button><button
+                        class="vk-key">]</button>
+                      <button class="vk-key">;</button><button
+                        class="vk-key">:</button>
+                      <button class="vk-key" data-action="backspace">⌫</button>
+                    </div>
+                    <div class="vk-row">
+                      <button class="vk-key wide"
+                        data-action="space">Space</button>
+                      <button class="vk-key" data-action="enter">Enter</button>
+                      <button class="vk-key toggle"
+                        data-toggle="letters">ABC</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+<!-- QR BUTTON -->
+  <div>
+  <button id="uploadBGBtn" class="side-btn">
+    <i class="ri-upload-2-line"></i> Upload Background
+  </button>
+  </div>
+              
+<!-- ----------------------------- BACKGROUND FILTER DROPDOWN ----------------------------- -->
+              <div class="dropdown_background">
+                <button class="dropdown_button background">
+                  <span class="btn-text">Backgrounds</span>
+                  <span class="triangle"></span>
+                </button>
+                <div class="dropdown_content background" id="backgroundWrapper">
+                  <div class="sticker-scroll">
+                    <div class="sticker-grid">
+                      <button onclick="setBackground(0)" class="bg-btn"
+                        style="background-color: transparent;">Remove</button>
+                      <button onclick="setBackground(1)" class="bg-btn"
+                        style="background-color: lightpink;"></button>
+                      <button onclick="setBackground(2)" class="bg-btn"
+                        style="background-color: lightblue;"></button>
+                      <button onclick="setBackground(3)" class="bg-btn"
+                        style="background-color: #CF9FFF;"></button>
+                      <button onclick="setBackground(4)" class="bg-btn"
+                        style="background-color: #ADEBB3;"></button>
+                      <button onclick="setBackground(5)" class="bg-btn"
+                        style="background-color: #FFFCCC;"></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-------------------- Camera Effects ------------------------------------>
+              <div class="effects">
+                <div class="dropdown_effects">
+                  <button class="dropdown_button effects">
+                    <span class="btn-text">Camera Effects</span>
+                    <div class="triangle"></div>
+                  </button>
+                  <div class="dropdown_content effects">
+                    <div class="category">
+                      <div class="sticker-buttons">
+                        <button class="btn effects"
+                          data-category="Christmas">Christmas</button>
+                        <button class="btn effects"
+                          data-category="Halloween">Halloween</button>
+                        <button class="btn effects"
+                          data-category="Hearts Day">Heart's day</button>
+                        <button class="btn effects"
+                          data-category="Others">Others</button>
+                      </div>
+                    </div>
+                    <div class="sticker-scroll">
+                      <div class="sticker-grid" id="effectsWrapper"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="popup" id="popup">
+      <div class="pop">
+        <p>Instructions</p>
+        <div class="carousel-container">
+          <button class="arrow left" onclick="prevSlide()">&lt;</button>
+          <div class="carousel">
+            <img
+              src="{{ url_for('static', filename='Images/instuction/2.png') }}"
+              alt="Instruction 1" id="slide1" class="active">
+            <img
+              src="{{ url_for('static', filename='Images/instuction/3.png') }}"
+              alt="Instruction 2" id="slide2">
+            <img
+              src="{{ url_for('static', filename='Images/instuction/4.png') }}"
+              alt="Instruction 3" id="slide3">
+            <img
+              src="{{ url_for('static', filename='Images/instuction/5.png') }}"
+              alt="Instruction 4" id="slide4">
+            <img
+              src="{{ url_for('static', filename='Images/instuction/6.png') }}"
+              alt="Instruction 5" id="slide5">
+
+          </div>
+          <button class="arrow right" onclick="nextSlide()">&gt;</button>
+        </div>
+
+        <div class="bottom-bar">
+          <div class="dots">
+            <div class="dot active" onclick="goToSlide(1)"></div>
+            <div class="dot" onclick="goToSlide(2)"></div>
+            <div class="dot" onclick="goToSlide(3)"></div>
+            <div class="dot" onclick="goToSlide(4)"></div>
+            <div class="dot" onclick="goToSlide(5)"></div>
+          </div>
+          <button class="okay-btn" onclick="hidePopup()">Okay</button>
+        </div>
+      </div>
+    </div>
+    <div class="loading" id="loading">
+      <div class="loading-card">
+        <h1>Please wait for a while!</h1>
+        <img src="{{ url_for('static', filename='Images/waiting/cati.png') }}"
+          alt="Cat" />
+        <div class="progress-bar-container">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+      </div>
+    </div>
+
+<!-- CAMERA SETTINGS -->
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.10.0"></script>
+  <script
+      src="https://cdn.jsdelivr.net/npm/@tensorflow-models/body-pix@2.2.0"></script>
+  <script>
+
+const img = document.getElementById('img');
+const counterDisplay = document.getElementById('photoCounter');
+const countdownEl = document.getElementById('countdown');
+const previewContainer = document.getElementById('previewContainer');
+
+previewContainer.style.display = "none";
+
+
+const photoCount = 5; 
+let capturedImages = [];
+let currentPhoto = 0;
+let isCapturing = false;
+
+const template = "{{ template }}" || localStorage.getItem("templateChoice") || "1";
+previewContainer.className = "template-" + template;
+
+counterDisplay.textContent = `${currentPhoto}/${photoCount}`;
+
+previewContainer.addEventListener("click", () => {
+
+  const requiredShots =
+    template === "1" ? 1 :
+    template === "2" ? 2 : 4;
+
+  if (capturedImages.length < requiredShots) {
+    alert(
+      `Preview not complete.\n` +
+      `You need ${requiredShots} photos.\n` +
+      `Current: ${capturedImages.length}`
+    );
+    return;
+  }
+
+  showPreviewPopup(capturedImages.slice(-requiredShots));
+});
+
+
+
+function updatePreview() {
+    previewContainer.innerHTML = "";
+
+    if (capturedImages.length === 0) {
+        previewContainer.style.display = "none";
+        return;
+    }
+
+    previewContainer.style.display = "block";
+    const maxPreviews =
+        template === "1" ? 1 :
+        template === "2" ? 2 : 4;
+
+    const start = Math.max(0, capturedImages.length - maxPreviews);
+    const images = capturedImages.slice(start);
+
+    images.forEach((src, index) => {
+        const div = document.createElement("div");
+        div.className = "preview-image";
+        div.style.backgroundImage = `url(${src})`;
+
+        if (template === "1") {
+      div.style.top = "8px";
+      div.style.left = "8px";
+      div.style.width = "155px";
+      div.style.height = "110px";
+        }
+
+        else if (template === "2") {
+            div.style.width = "75px";
+            div.style.height = "55px";
+
+      if (index === 0) { div.style.top = "10px"; div.style.left = "90px"; }
+      if (index === 1) { div.style.top = "65px"; div.style.left = "9px"; }
+        }
+
+        else if (template === "3") {
+            div.style.width = "75px";
+            div.style.height = "55px";
+
+      if (index === 0) { div.style.top = "6px"; div.style.left = "8px"; }
+      if (index === 1) { div.style.top = "6px"; div.style.left = "92px"; }
+      if (index === 2) { div.style.top = "68px"; div.style.left = "8px"; }
+      if (index === 3) { div.style.top = "68px"; div.style.left = "92px"; }
+        }
+
+        previewContainer.appendChild(div);
+    });
+}
+
+
+function takePhoto() {
+  const canvas = document.createElement('canvas');
+  const shutter = document.getElementById('shutter');
+
+  canvas.width = img.width || 300;
+  canvas.height = img.height || 225;
+  const ctx = canvas.getContext('2d');
+
+  
+  ctx.translate(canvas.width, 0);
+  ctx.scale(-1, 1);
+
+  
+  if (img.complete && img.naturalWidth > 0) {
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  } else {
+    ctx.fillStyle = "#fff";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  }
+
+  
+  shutter.style.opacity = 1;
+  setTimeout(() => {
+    shutter.style.opacity = 0;
+  }, 120);
+
+  const imageData = canvas.toDataURL("image/jpeg");
+  capturedImages.push(imageData);
+
+  updatePreview();
+}
+
+
+function startCapture() {
+    if (isCapturing) return;
+    isCapturing = true;
+
+    let count = 3;
+    countdownEl.style.display = "block";
+    countdownEl.textContent = count;
+
+    const timer = setInterval(() => {
+        count--;
+        countdownEl.textContent = count > 0 ? count : "";
+
+        if (count <= 0) {
+            clearInterval(timer);
+            countdownEl.style.display = "none";
+
+            takePhoto();
+            currentPhoto++;
+            counterDisplay.textContent = `${currentPhoto}/${photoCount}`;
+
+            if (currentPhoto < photoCount) {
+                isCapturing = false;
+            } else {
+                localStorage.setItem("capturedPhotos", JSON.stringify(capturedImages));
+                localStorage.setItem("templateChoice", template);
+
+                setTimeout(() => {
+                    window.location.href = `/cameraoption?template=${template}`;
+                }, 500);
+            }
+        }
+    }, 1000);
+}
+
+
+document.addEventListener("keydown", (e) => {
+    if (e.key === "F9" || e.key === "F10") {
+        startCapture();
+    }
+});
+</script>
+
+<script>
+const popup = document.getElementById("previewPopup");
+const popupPreview = document.getElementById("popupPreview");
+const btnYes = document.getElementById("btnYes");
+const btnNo = document.getElementById("btnNo");
+
+function showPreviewPopup(images) {
+  popupPreview.innerHTML = "";
+
+  images.forEach((src, index) => {
+    const div = document.createElement("div");
+    div.className = "preview-image";
+    div.style.backgroundImage = `url(${src})`;
+
+    
+    if (template === "1") {
+      div.style.width = "680px";
+      div.style.height = "415px";
+      div.style.top = "20px";
+      div.style.left = "20px";
+    }
+
+    if (template === "2") {
+      div.style.width = "320px";
+      div.style.height = "200px";
+    if(index === 0){ div.style.top = "20px"; div.style.left = "370px"; }
+    if(index === 1){ div.style.top = "240px"; div.style.left = "30px"; }
+    }
+
+    if (template === "3") {
+      div.style.width = "320px";
+      div.style.height = "200px";
+      if (index === 0) { div.style.top = "20px"; div.style.left = "25px"; }
+      if (index === 1) { div.style.top = "20px"; div.style.left = "370px"; }
+      if (index === 2) { div.style.top = "240px"; div.style.left = "25px"; }
+      if (index === 3) { div.style.top = "240px"; div.style.left = "370px"; }
+    }
+
+    popupPreview.appendChild(div);
+  });
+
+  popup.style.display = "flex";
+}
+
+btnYes.onclick = () => {
+  const requiredShots =
+    template === "1" ? 1 :
+    template === "2" ? 2 : 4;
+
+  const selectedPhotos = capturedImages.slice(-requiredShots);
+
+
+  localStorage.setItem("designPhotos", JSON.stringify({
+    photos: selectedPhotos,
+    template: template
+  }));
+
+  popup.style.display = "none";
+  window.location.href = `/design?template=${template}`;
+};
+
+
+btnNo.onclick = () => {
+  popup.style.display = "none";
+};
+</script>
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+
+  function show() {
+  const sidemenu = document.getElementById("sidemenu");
+  const body = document.body;
+
+  if (sidemenu.style.right === "0px") {
+    sidemenu.style.right = "-750px";  
+    body.classList.remove("menu-open"); 
+  } else {
+    sidemenu.style.right = "0px";    
+    body.classList.add("menu-open");  
+  }
+}
+
+function hide() {
+  const sidemenu = document.getElementById("sidemenu");
+  const body = document.body;
+
+  sidemenu.style.right = "-750px";     
+  body.classList.remove("menu-open");  // ✅ Always remove class
+}
+// -------------------------------PARA SA CAUROSEL------------------------------------
+
+  let swiperCards1 = new Swiper(".card__container1", {
+    loop: true,
+    spaceBetween: 20,
+    grabCursor: true,
+    navigation: {
+      nextEl: ".background-next",
+      prevEl: ".background-prev",
+    },
+    breakpoints: {
+      0: { slidesPerView: 1 },
+      600: { slidesPerView: 2 },
+      968: { slidesPerView: 4 },
+    },
+  });
+    let swiperCards2 = new Swiper(".card__container2", {
+    loop: true,
+    spaceBetween: 20,
+    grabCursor: true,
+    navigation: {
+      nextEl: ".effects-next",
+      prevEl: ".effects-prev",
+    },
+    breakpoints: {
+      0: { slidesPerView: 1 },
+      600: { slidesPerView: 2 },
+      968: { slidesPerView: 4 },
+    },
+  });
+</script>
+
+    <!-- POP UP -->
+    <script>
+var div = document.getElementById('popup');
+var display = 0;
+
+function showPopup(){
+  if(display == 0){
+    div.style.display = 'block';
+    display = 1;
+  }
+}
+
+function hidePopup(){
+  if(display ==1){
+    div.style.display = 'none';
+        display = 0;
+
+  }
+}
+</script>
+
+<!-- SLIDE NG PUP UP -->
+<script>
+let currentSlide = 1;
+const totalSlides = 5;
+
+function showSlide(index) {
+  const slides = document.querySelectorAll('.carousel img');
+  slides.forEach(slide => slide.classList.remove('active'));
+  slides[index - 1].classList.add('active');
+
+  const dots = document.querySelectorAll('.dot');
+  dots.forEach((dot, idx) => {
+    dot.classList.remove('active');
+    if (idx === index - 1) {
+      dot.classList.add('active');
+    }
+  });
+}
+
+function prevSlide() {
+  currentSlide = (currentSlide === 1) ? totalSlides : currentSlide - 1;
+  showSlide(currentSlide);
+}
+
+function nextSlide() {
+  currentSlide = (currentSlide === totalSlides) ? 1 : currentSlide + 1;
+  showSlide(currentSlide);
+}
+
+function goToSlide(index) {
+  currentSlide = index;
+  showSlide(currentSlide);
+}
+
+</script>
+
+<!-- -------AI------ -->
+<script>
+const el = (id) => document.getElementById(id);
+
+const promptEl = el("prompt");
+const generateBtn = el("generate");
+const output = el("output");
+
+
+function ratioToSize() {
+  return [500, 255];
+}
+
+function buildPollinationsURL(prompt) {
+  const [w, h] = ratioToSize();
+  const base = "https://image.pollinations.ai/prompt/";
+  const safePrompt = encodeURIComponent(prompt);
+  const params = new URLSearchParams({
+    width: String(w),
+    height: String(h),
+    model: "flux",
+    seed: Math.floor(Math.random() * 1e9),
+    nologo: true,
+    enhance: false,
+    ts: String(Date.now())
+  });
+  return `${base}${safePrompt}?${params.toString()}`;
+}
+
+function setLoading(loading){
+    output.innerHTML = '';
+
+    if (loading) {
+        const msg = document.createElement("div");
+        msg.classList.add("picture");
+        msg.textContent = "⏳ Please wait... your image is generating.";
+        output.append(msg);
+    }
+}
+
+async function generate() {
+  generateBtn.disabled = true;
+  const basePrompt = (promptEl.value || "").trim();
+
+
+  if (!basePrompt) {
+    alert("⚠️ Please enter something.");
+    generateBtn.disabled = false;
+    return;
+  }
+
+
+  if (!/[A-Za-z0-9]/.test(basePrompt)) {
+    alert("⚠️ Prompt cannot be only symbols. Please describe something.");
+    generateBtn.disabled = false;
+    return;
+  }
+
+  const words = basePrompt.match(/[A-Za-z]{2,}/g);
+
+  if (!words || words.length === 0) {
+    alert("⚠️ Please type a meaningful word (like 'cat', 'sunset', 'car').");
+    generateBtn.disabled = false;
+    return;
+  }
+
+  if (basePrompt.length < 3) {
+    alert("⚠️ Prompt too short. Add more detail.");
+    generateBtn.disabled = false;
+    return;
+  }
+
+  const url = buildPollinationsURL(basePrompt);
+
+  setLoading(true);
+
+  const img = new Image();
+  img.referrerPolicy = "no-referrer";
+
+  img.onload = () => {
+    output.innerHTML = "";
+    output.appendChild(img);
+    generateBtn.disabled = false;
+  };
+
+  img.onerror = () => {
+    output.innerHTML = "❌ Failed to load image!";
+    generateBtn.disabled = false;
+  };
+
+  img.src = url;
+}
+
+generateBtn.addEventListener("click", generate);
+
+</script>
+
+    <script>
+function setBackground(index) {
+    if (index === 0) {
+        localStorage.removeItem('aiBackground');
+        fetch('/clear_ai_background', { method: 'POST' })
+            .then(res => res.json())
+            .then(data => console.log("Background cleared"))
+            .catch(err => console.error(err));
+    }
+    
+    fetch(`/set_background/${index}`, { method: "POST" })
+        .then(res => res.json())
+        .then(data => console.log("Background set:", data))
+        .catch(err => console.error(err));
+}
+
+</script>
+
+<!-- ----------------------------LOADING-------------------------------- -->
+<script>
+  const progressBar = document.getElementById('progressBar');
+  const cameraPage = document.getElementById('all');
+  const loader = document.getElementById('loading');
+
+  let progress = 0;
+  const duration = 3; 
+  const intervalTime = 300;
+  const increment = (intervalTime / duration) * 100;
+
+  const interval = setInterval(() => {
+    progress += increment;
+    if (progress > 100) progress = 100;
+    progressBar.style.width = progress + '%';
+
+    if (progress >= 100) {
+      clearInterval(interval);
+      loader.style.display = "none";
+      cameraPage.style.display = "block";
+    }
+  }, intervalTime);
+</script>
+
+<!-- ---------------------------- AI BG PASTE FUNCTION -------------------------------- -->
+<script>
+function pasteAIBackground() {
+    const output = document.getElementById('output');
+    const aiImage = output?.querySelector('img');
+    const pasteButton = document.querySelector('.view-button');
+
+    if (!pasteButton) return console.error("Paste button not found!");
+
+    if (aiImage && aiImage.src) {
+        pasteButton.textContent = 'Applying...';
+        pasteButton.disabled = true;
+
+        fetch('/set_ai_background', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                image_url: aiImage.src,
+                timestamp: new Date().getTime() 
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === "success") {
+                pasteButton.textContent = '✅ Applied';
+                document.getElementById('img').src = "{{ url_for('video_feed') }}?" + new Date().getTime();
+            } else {
+                pasteButton.textContent = '❌ Failed';
+                console.error('Failed to set AI background:', data.error);
+            }
+            setTimeout(() => {
+                pasteButton.textContent = 'Paste';
+                pasteButton.disabled = false;
+            }, 1500);
+        })
+        .catch(err => {
+            console.error('Error setting AI background:', err);
+            pasteButton.textContent = '❌ Error';
+            setTimeout(() => {
+                pasteButton.textContent = 'Paste';
+                pasteButton.disabled = false;
+            }, 1500);
+        });
+
+    } else {
+        pasteButton.textContent = 'Generate AI First';
+        setTimeout(() => pasteButton.textContent = 'Paste', 1500);
+        console.warn("No AI image found to paste");
+    }
+}
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const pasteButton = document.querySelector('.view-button');
+    if (pasteButton) pasteButton.onclick = pasteAIBackground;
+});
+
+
+function setBackground(index) {
+    if (index === 0) {
+        fetch('/clear_ai_background', { method: 'POST' })
+            .then(() => {
+                document.getElementById('img').src = "{{ url_for('video_feed') }}?" + new Date().getTime();
+            });
+    }
+    
+    fetch(`/set_background/${index}`, { method: "POST" })
+        .then(res => res.json())
+        .then(data => console.log("Background set:", data))
+        .catch(err => console.error(err));
+}
+</script>
+
+<!-- --------------------- DEBUG AI BACKGROUND (REVISED SILENT) ------------------------------- -->
+<script>
+console.log("Silent AI Background debug script loaded");
+
+function pasteAIBackground() {
+    const output = document.getElementById('output');
+    const aiImage = output?.querySelector('img');
+    const pasteButton = document.querySelector('.view-button');
+
+    if (!pasteButton) return console.error("Paste button not found!");
+
+    if (aiImage && aiImage.src) {
+        console.log("Sending AI image URL to server:", aiImage.src);
+        pasteButton.textContent = 'Applying...';
+        pasteButton.disabled = true;
+
+        fetch('/set_ai_background', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                image_url: aiImage.src,
+                timestamp: new Date().getTime() 
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === "success") {
+                pasteButton.textContent = '✅ Applied';
+                document.getElementById('img').src = "{{ url_for('video_feed') }}?" + new Date().getTime();
+                console.log('AI image set as background successfully');
+            } else {
+                pasteButton.textContent = '❌ Failed';
+                console.error('Failed to set AI background:', data.error);
+            }
+            setTimeout(() => {
+                pasteButton.textContent = 'Paste';
+                pasteButton.disabled = false;
+            }, 1500);
+        })
+        .catch(err => {
+            console.error('Network error while setting AI background:', err);
+            pasteButton.textContent = '❌ Error';
+            setTimeout(() => {
+                pasteButton.textContent = 'Paste';
+                pasteButton.disabled = false;
+            }, 1500);
+        });
+
+    } else {
+        pasteButton.textContent = 'Generate AI First';
+        setTimeout(() => pasteButton.textContent = 'Paste', 1500);
+        console.warn("No AI image found to paste");
+    }
+}
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const pasteButton = document.querySelector('.view-button');
+    if (pasteButton) pasteButton.onclick = pasteAIBackground;
+});
+
+
+function testBackground() {
+    console.log("Testing background with sample image...");
+    fetch('/set_ai_background', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ 
+            test: true,
+            timestamp: new Date().getTime()
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log('Test response:', data);
+        document.getElementById('img').src = "{{ url_for('video_feed') }}?" + new Date().getTime();
+    });
+}
+</script>
+
+<!-- ----------------------------VIRTUAL KEYBOARD-------------------------------- -->
+<script>
+const vkContainer = document.getElementById('virtualKeyboardContainer');
+const vkCloseBtn = document.getElementById('vkCloseBtn');
+const promptInput = document.getElementById('prompt');
+const header = document.getElementById('virtualKeyboardHeader');
+const lettersLayout = document.getElementById('lettersLayout');
+const symbolsLayout = document.getElementById('symbolsLayout');
+let isShift = false;
+
+
+promptInput.addEventListener('focus', () => {
+  vkContainer.classList.remove('hidden');
+  vkContainer.style.display = 'block';
+  resetKeyboardPosition(); 
+});
+
+
+function closeKeyboard() {
+  vkContainer.classList.add('hidden');
+  vkContainer.style.display = 'none';
+  resetKeyboardPosition(); 
+}
+
+vkCloseBtn.addEventListener('click', closeKeyboard);
+
+document.addEventListener('click', (e) => {
+  if (!vkContainer.contains(e.target) && e.target !== promptInput) {
+    closeKeyboard();
+  }
+});
+
+// === KEY PRESS HANDLER ===
+vkContainer.addEventListener('click', (e) => {
+  const key = e.target;
+  if (!key.classList.contains('vk-key')) return;
+  const action = key.dataset.action;
+  const toggle = key.dataset.toggle;
+
+  if (toggle === 'symbols') {
+    lettersLayout.classList.add('hidden');
+    symbolsLayout.classList.remove('hidden');
+    return;
+  } else if (toggle === 'letters') {
+    symbolsLayout.classList.add('hidden');
+    lettersLayout.classList.remove('hidden');
+    return;
+  }
+
+  if (action === 'shift') {
+    isShift = !isShift;
+    updateKeysCase();
+    return;
+  }
+
+  if (!action) {
+      promptInput.value += key.textContent;
+  } else if (action === 'backspace') {
+      promptInput.value = promptInput.value.slice(0, -1);
+  } else if (action === 'space') {
+      promptInput.value += ' ';
+  } else if (action === 'enter') {
+      // ✅ Trigger generate AND close keyboard
+      if (typeof generate === 'function') {
+          generate(); 
+      }
+      closeKeyboard(); // This makes it disappear
+  }
+
+  promptInput.scrollTop = promptInput.scrollHeight;
+});
+
+// === UPDATE LETTER CASE ===
+function updateKeysCase() {
+  const keys = lettersLayout.querySelectorAll('.vk-key');
+  keys.forEach(key => {
+    if (!key.dataset.action && !key.classList.contains('toggle')) {
+      key.textContent = isShift ? key.textContent.toUpperCase() : key.textContent.toLowerCase();
+    }
+  });
+}
+
+// === DRAGGABLE FUNCTION ===
+let isDragging = false, offsetX = 0, offsetY = 0;
+
+header.addEventListener('mousedown', (e) => {
+  isDragging = true;
+  const rect = vkContainer.getBoundingClientRect();
+  offsetX = e.clientX - rect.left;
+  offsetY = e.clientY - rect.top;
+  vkContainer.style.transform = 'none';
+  document.body.style.userSelect = 'none';
+});
+
+
+document.addEventListener('mousemove', (e) => {
+  if (!isDragging) return;
+  vkContainer.style.left = `${e.clientX - offsetX}px`;
+  vkContainer.style.top = `${e.clientY - offsetY}px`;
+  vkContainer.style.position = 'fixed';
+});
+
+
+document.addEventListener('mouseup', () => {
+  isDragging = false;
+  document.body.style.userSelect = 'auto';
+});
+
+
+// =================== TOUCH SUPPORT ===================
+
+header.addEventListener('touchstart', (e) => {
+  isDragging = true;
+  const touch = e.touches[0];
+  const rect = vkContainer.getBoundingClientRect();
+  offsetX = touch.clientX - rect.left;
+  offsetY = touch.clientY - rect.top;
+  vkContainer.style.transform = 'none';
+  document.body.style.userSelect = 'none';
+}, { passive: true });
+
+
+document.addEventListener('touchmove', (e) => {
+  if (!isDragging) return;
+  const touch = e.touches[0];
+  vkContainer.style.left = `${touch.clientX - offsetX}px`;
+  vkContainer.style.top = `${touch.clientY - offsetY}px`;
+  vkContainer.style.position = 'fixed';
+}, { passive: true });
+
+
+document.addEventListener('touchend', () => {
+  isDragging = false;
+  document.body.style.userSelect = 'auto';
+});
+
+
+function resetKeyboardPosition() {
+  vkContainer.style.left = '50%';
+  vkContainer.style.top = '50%';
+  vkContainer.style.transform = 'translate(-50%, -50%)';
+  vkContainer.dataset.positioned = 'true';
+}
+
+
+function resetKeyboardPosition() {
+  vkContainer.style.left = '50%';
+  vkContainer.style.top = '50%';
+  vkContainer.style.transform = 'translate(-50%, -50%)';
+  vkContainer.dataset.positioned = 'true';
+}
+
+const backspaceButtons = document.querySelectorAll('.vk-key[data-action="backspace"]');
+let longPressTimer;
+
+backspaceButtons.forEach(btn => {
+    const startLongPress = () => {
+        longPressTimer = setTimeout(() => {
+            promptInput.value = ""; 
+            promptInput.classList.add('flash'); 
+            setTimeout(() => promptInput.classList.remove('flash'), 200);
+        }, 600); 
+    };
+
+    const cancelLongPress = () => {
+        clearTimeout(longPressTimer);
+    };
+
+
+    btn.addEventListener('mousedown', startLongPress);
+    btn.addEventListener('mouseup', cancelLongPress);
+    btn.addEventListener('mouseleave', cancelLongPress);
+
+
+    btn.addEventListener('touchstart', startLongPress);
+    btn.addEventListener('touchend', cancelLongPress);
+});
+</script>
+
+<!-- ----------------------------QR CODE-------------------------------- -->
+<script>
+const uploadBGBtn = document.getElementById("uploadBGBtn");
+
+uploadBGBtn.addEventListener("click", () => {
+    // --- CREATE THE OVERLAY IMMEDIATELY ---
+    const overlay = document.createElement("div");
+    overlay.style.position = "fixed";
+    overlay.style.top = "0";
+    overlay.style.left = "0";
+    overlay.style.width = "100%";
+    overlay.style.height = "100%";
+    overlay.style.background = "rgba(0,0,0,0.6)";
+    overlay.style.display = "flex";
+    overlay.style.flexDirection = "column";
+    overlay.style.alignItems = "center";
+    overlay.style.justifyContent = "center";
+    overlay.style.zIndex = "9999";
+
+    const img_Instructions = document.createElement("img");
+    img_Instructions.src = "/static/Images/Unique.png"
+    img_Instructions.style.width = "400px";
+    img_Instructions.style.height = "400px";
+    img_Instructions.style.borderRadius = "10px";
+    img_Instructions.style.marginTop = "-20px";
+    img_Instructions.style.marginLeft = "100px";
+
+    img_Instructions.style.position = "fixed";
+    img_Instructions.style.top = "44%";
+    img_Instructions.style.left = "20px";
+    img_Instructions.style.transform = "translateY(-50%)";
+    img_Instructions.style.zIndex = "10000";
+
+    const img = document.createElement("img");
+    img.style.width = "400px";
+    img.style.height = "400px";
+    img.style.border = "8px solid white";
+    img.style.borderRadius = "10px";
+    img.style.marginBottom = "30px";
+
+    const msg = document.createElement("div");
+    msg.innerText = "📱 Loading QR code...";
+    msg.style.color = "white";
+    msg.style.fontSize = "20px";
+    msg.style.textAlign = "center";
+    msg.style.fontFamily = "'Lexend', sans-serif";
+
+    const closeBtn = document.createElement("button");
+    closeBtn.innerText = "Close";
+    closeBtn.style.padding = "16px 40px";
+    closeBtn.style.fontSize = "16px";
+    closeBtn.style.border = "none";
+    closeBtn.style.borderRadius = "6px";
+    closeBtn.style.background = "#EBEFFF";
+    closeBtn.style.color = "black";
+    closeBtn.style.marginTop = "30px";
+    closeBtn.onclick = () => document.body.removeChild(overlay);
+
+    overlay.appendChild(img);
+    overlay.appendChild(msg);
+    overlay.appendChild(closeBtn);
+    overlay.appendChild(img_Instructions);
+    document.body.appendChild(overlay);
+
+    // --- FETCH QR IMAGE ASYNC (won't block overlay) ---
+    fetch("/get_qr")
+        .then(res => res.blob())
+        .then(blob => {
+            const url = URL.createObjectURL(blob);
+            img.src = url;
+            msg.innerText = "📱 Scan this QR to upload a background image";
+        })
+        .catch(err => {
+            msg.innerText = "⚠️ Failed to load QR code";
+            console.error(err);
+        });
+
+
+    fetch('http://192.168.1.10:8000/set_background/1', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ bg_id: 1 })
+    })
+    .then(res => res.json())
+    .then(data => console.log("Background set:", data))
+    .catch(err => console.error(err));
+});
+</script>
+
+<!-- ----------------------DROPDOWN------------------------- -->
+<script>
+document.querySelectorAll(".dropdown_button").forEach(button => {
+  button.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const dropdown = button.nextElementSibling;
+    dropdown.classList.toggle("show");
+    button.classList.toggle('active'); 
+  });
+});
+
+
+window.addEventListener("click", (event) => {
+  if (!event.target.closest(".dropdown_background") &&
+      !event.target.closest(".dropdown_effects")) {
+    document.querySelectorAll(".dropdown_content").forEach(drop => {
+      drop.classList.remove("show");
+      drop.previousElementSibling.classList.remove("active");
+    });
+  }
+});
+</script>
+    <!-- ------------------CAMERA EFFECTS------------------- -->
+    <script>
+  document.addEventListener("DOMContentLoaded", () => {
+  const effectsWrapper = document.getElementById("effectsWrapper");
+  const categoryButtons = document.querySelectorAll(".sticker-buttons .btn");
+
+  categoryButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      const category = button.dataset.category;
+
+      categoryButtons.forEach(btn => btn.classList.remove("active"));
+      button.classList.add("active");
+
+      fetch(`/get_effects/${category}`)
+        .then(res => res.json())
+        .then(data => {
+          effectsWrapper.innerHTML = "";
+
+          const removeBtn = document.createElement("div");
+          removeBtn.className = "effect-item remove-effect-btn";
+          removeBtn.textContent = "Remove Effect";
+          removeBtn.addEventListener("click", () => {
+      
+            fetch("/remove_effect", { method: "POST" });
+          });
+          effectsWrapper.appendChild(removeBtn);
+
+          if (!data.effects || data.effects.length === 0) {
+            const noEffects = document.createElement("p");
+            noEffects.textContent = "No effects available.";
+            effectsWrapper.appendChild(noEffects);
+            return;
+          }
+
+          data.effects.forEach(effect => {
+            const img = document.createElement("img");
+            img.src = effect.src; 
+            img.alt = effect.key;
+            img.title = effect.key;
+            img.className = "effect-item";
+
+            img.addEventListener("click", () => {
+              fetch("/set_effect", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ effect_key: effect.key })
+              });
+            });
+
+            effectsWrapper.appendChild(img);
+          });
+        })
+        .catch(err => {
+          console.error("Error loading effects:", err);
+          effectsWrapper.innerHTML = "<p>Failed to load effects.</p>";
+        });
+    });
+  });
+});
+
+</script>
+
+    <div id="warningPopup" style="
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(255, 255, 255, 0.4);
+    z-index: 10000;
+    justify-content: center;
+    align-items: center;
+">
+      <div style="
+        background: white;
+        padding: 20px 50px;
+        border-radius: 50px;
+        box-shadow: 0px 10px 30px rgba(0,0,0,0.15);
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        border: 1px solid #f0f0f0;
+    ">
+        <img src="{{ url_for('static', filename='Images/catblush.png') }}"
+          style="width: 60px; height: 60px; object-fit: contain;">
+        <span style="
+            font-family: 'Arial', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            color: black;
+            letter-spacing: -0.5px;
+        ">5 Minutes Left!</span>
+      </div>
+    </div>
+
+    <audio id="warningSound"
+      src="{{ url_for('static', filename='sounds/warning.mp3') }}"></audio>
+
+    <div id="timer" class="timer" style="
+    position: fixed;
+    top: 75px;
+    left: 80px;
+    width: 110px;
+    height: 50px;
+    font-size: 24px;
+    font-family: Lexend, sans-serif;
+    color: white;
+    background-color: rgba(0,0,0,0.7);
+    border-radius: 40px;
+    z-index: 10000;
+    display: flex;
+    justify-content: center;  /* horizontal center */
+    align-items: center;      /* vertical center */
+    text-align: center;
+      transition: margin 0.3s ease;
+">
+      --:--
+    </div>
+    <!-- ========timer========= -->
+    <script src="{{ url_for('static', filename='js/timer.js') }}"></script>
+  </body>
+</html>

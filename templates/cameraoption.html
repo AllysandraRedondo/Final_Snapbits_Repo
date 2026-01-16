@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Preview</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lobster&family=Mitr:wght@200;300;400;500;600;700&family=Mohave:ital,wght@0,300..700;1,300..700&family=Molle&family=Pacifico&family=Lexend:wght@100;200;300;400;500;600;700;800;900& display=swap"
+      rel="stylesheet">
+    <style>
+body {
+  font-family: "Lexend", sans-serif;
+  background: #DFEBFD;
+  margin: 0;
+  padding: 0;
+}
+
+.final-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+/* =====================
+   PREVIEW CONTAINER
+===================== */
+.final-preview-container {
+  position: relative;
+  width: 720px;
+  height: 460px;
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  margin-bottom: 30px;
+}
+
+.final-preview-container img {
+  position: absolute;
+  border-radius: 10px;
+  object-fit: cover;
+      transform: scaleX(-1);
+
+}
+
+/* =====================
+   BUTTONS
+===================== */
+.btn-group {
+  display: flex;
+  gap: 20px;
+}
+
+.btn {
+  padding: 14px 30px;
+  border: 2px dashed #482A41;
+  border-radius: 25px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+    color: #482A41;
+    text-align: center;
+}
+
+.btn.one{
+    background: linear-gradient(to bottom, #C4D1FF 40%, #FFFFFF 90%);
+}
+.btn.two{
+    background: linear-gradient(to bottom, #FFD5DE 40%, #FFFFFF 90%);
+}
+.btn.one:hover {
+    background: linear-gradient(to bottom, #FFFFFF 40%, #C4D1FF 90%);
+    color: #482A41;
+}
+.btn.two:hover {
+    background: linear-gradient(to bottom, #FFFFFF 40%, #FFD5DE 90%);
+    color: #482A41;
+}
+</style>
+  </head>
+
+  <body>
+    <!-- Warning popup -->
+    <div id="warningPopup" style="
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(255, 255, 255, 0.4);
+    z-index: 10000;
+    justify-content: center;
+    align-items: center;
+">
+      <div style="
+        background: white;
+        padding: 20px 50px;
+        border-radius: 50px;
+        box-shadow: 0px 10px 30px rgba(0,0,0,0.15);
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        border: 1px solid #f0f0f0;
+    ">
+        <img src="{{ url_for('static', filename='Images/catblush.png') }}"
+          style="width: 60px; height: 60px; object-fit: contain;">
+        <span style="
+            font-family: 'Arial', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            color: black;
+            letter-spacing: -0.5px;
+        ">5 Minutes Left!</span>
+      </div>
+    </div>
+
+    <audio id="warningSound"
+      src="{{ url_for('static', filename='sounds/warning.mp3') }}"></audio>
+
+    <div class="final-section">
+      <h2>Here’s Your Photo Arrangement</h2>
+
+      <div class="final-preview-container"
+        id="finalPreviewContainer"></div>
+
+      <p>Do you want to rearrange your photos or are you satisfied?</p>
+
+      <div class="btn-group">
+        <button class="btn one"
+          onclick="goToPhotoSelectionPage()">Rearrange/Change</button>
+        <button class="btn two"
+          onclick="goToDesignPage()">Satisfied</button>
+      </div>
+    </div>
+    <div id="timer" style="
+    position: fixed;       /* always relative to viewport */
+    top: 25px;             /* distance from top */
+    left: 40px;           /* distance from right */
+    font-size: 24px;
+    font-family: Lexend, sans-serif;
+    color: white;
+    background-color: rgba(0,0,0,0.7);
+    border-radius: 40px;
+    z-index: 10000;
+    display: flex;
+    justify-content: center;  /* horizontal center */
+    align-items: center;      /* vertical center */
+    text-align: center;
+      width: 110px;
+      height: 50px;">
+      --:--
+    </div>
+
+    <script>
+/* =====================
+   SHOW FINAL PREVIEW
+===================== */
+function showFinalPreview(images, template) {
+  const container = document.getElementById("finalPreviewContainer");
+  container.innerHTML = "";
+
+  images.forEach((src, index) => {
+    const img = document.createElement("img");
+    img.src = src;
+
+    /* ===== TEMPLATE 1 ===== */
+    if (template === "1") {
+      img.style.width = "720px";
+      img.style.height = "460px";
+      img.style.top = "20px";
+      img.style.left = "20px";
+    }
+
+    /* ===== TEMPLATE 2 ===== */
+    else if (template === "2") {
+      img.style.width = "320px";
+      img.style.height = "200px";
+
+      // FIRST → TOP RIGHT
+      if (index === 0) {
+        img.style.top = "40px";
+        img.style.left = "400px";
+      }
+
+      // SECOND → BOTTOM LEFT
+      if (index === 1) {
+        img.style.top = "260px";
+        img.style.left = "40px";
+      }
+    }
+
+    /* ===== TEMPLATE 3 ===== */
+    else if (template === "3") {
+      img.style.width = "320px";
+      img.style.height = "200px";
+
+        if (index === 0) { img.style.top = "30px";  img.style.left = "30px"; }
+        if (index === 1) { img.style.top = "30px";  img.style.left = "395px"; }
+        if (index === 2) { img.style.top = "260px"; img.style.left = "30px"; }
+        if (index === 3) { img.style.top = "260px"; img.style.left = "395px"; }
+    }
+
+    container.appendChild(img);
+  });
+}
+
+/* =====================
+   LOAD ON PAGE OPEN
+===================== */
+document.addEventListener("DOMContentLoaded", () => {
+  const images = JSON.parse(localStorage.getItem("capturedPhotos"));
+  const template = localStorage.getItem("templateChoice") || "1";
+
+  if (!images || images.length === 0) return;
+
+const limit = template === "1" ? 1 : template === "2" ? 2 : 4;
+
+// ✅ TAKE LAST SHOTS INSTEAD OF FIRST
+const imagesToShow = images.slice(-limit);
+
+showFinalPreview(imagesToShow, template);
+
+});
+
+/* =====================
+   NAVIGATION
+===================== */
+function goToPhotoSelectionPage() {
+  const template = localStorage.getItem("templateChoice") || "1";
+  window.location.href = `/photoselection?template=${template}`;
+}
+
+function goToDesignPage() {
+  const template = localStorage.getItem("templateChoice") || "1";
+  const images = JSON.parse(localStorage.getItem("capturedPhotos")) || [];
+
+  const limit = template === "1" ? 1 : template === "2" ? 2 : 4;
+  const selectedPhotos = images.slice(-limit); // last shots
+
+  // Save both selected photos and template to designPhotos
+  localStorage.setItem("designPhotos", JSON.stringify({ photos: selectedPhotos, template }));
+  window.location.href = "/design";
+}
+
+</script>
+    <script src="{{ url_for('static', filename='js/timer.js') }}"></script>
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+  let remaining = 0;
+  let totalDuration = 0;
+  let timerInterval = null;
+  let halfWarningTriggered = false;
+
+  async function fetchInitialTime() {
+    try {
+      const res = await fetch("/get_remaining_time");
+      const data = await res.json();
+      remaining = Number(data.remaining) || 0;
+      totalDuration = Number(data.total) || 0;
+
+      if (remaining <= totalDuration / 2) {
+        applyHalfWarning(false); // just change bg, no popup
+        halfWarningTriggered = true;
+      }
+
+    } catch (err) {
+      console.error("Error fetching remaining time:", err);
+      remaining = 0;
+    }
+  }
+
+  function applyHalfWarning(showPopup = true) {
+    const timerEl = document.getElementById("timer");
+    if (timerEl) {
+      timerEl.style.backgroundColor = "red";
+      timerEl.style.color = "black";
+    }
+
+    if (showPopup) {
+      const popup = document.getElementById("warningPopup");
+      const sound = document.getElementById("warningSound");
+      if (popup) popup.style.display = "flex";
+      if (sound) sound.play();
+      setTimeout(() => { if (popup) popup.style.display = "none"; }, 2000);
+    }
+  }
+
+  function tick() {
+    const mins = Math.floor(remaining / 60);
+    const secs = remaining % 60;
+    const timerEl = document.getElementById("timer");
+    if (timerEl) timerEl.innerText = `${mins}:${secs.toString().padStart(2,"0")}`;
+
+    if (!halfWarningTriggered && remaining <= totalDuration / 2) {
+      halfWarningTriggered = true;
+      applyHalfWarning(true);
+    }
+
+    if (remaining <= 0) {
+      clearInterval(timerInterval);
+      if (typeof canvas !== "undefined" && canvas) {
+        saveCanvasPhoto().finally(() => window.location.href="/numberOfCopies");
+      } else {
+        window.location.href="/numberOfCopies";
+      }
+      return;
+    }
+
+    remaining--;
+  }
+
+  async function startTimer() {
+    await fetchInitialTime();
+    tick();
+    timerInterval = setInterval(tick, 1000);
+  }
+
+  startTimer();
+});
+</script>
+
+  </body>
+</html>

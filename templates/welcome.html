@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Welcome - SnapBits</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lobster&family=Mitr:wght@200;300;400;500;600;700&family=Mohave:ital,wght@0,300..700;1,300..700&family=Molle&family=Pacifico&display=swap" rel="stylesheet">
+
+<style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      cursor: pointer;
+      overflow: hidden;
+      position: relative; 
+    }
+
+    .below-txt {
+      position: absolute;
+      bottom: 6%; 
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+    }
+    .below-txt .s {
+      font-family: "Pacifico", cursive;
+      font-size: 80px;
+      margin: 0;
+    }
+    .below-txt p {
+      font-size: 40px;
+      font-family: "Mitr", sans-serif;
+      margin: 0px;
+    }
+
+.full_img {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.full_img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+}
+</style>
+</head>
+
+
+<body onclick="goToInstructions()">
+  <div class="full_img">
+    <img src="{{ url_for('static', filename='Images/welcome/welcome.png') }}" class="img">
+  </div>
+
+  <div class="below-txt">
+    <p class="s">SnapBits</p>
+    <p>Tap to Start</p>
+  </div>
+
+  <script>
+    function goToInstructions() {
+      window.location.href = "/instructions"; 
+    }
+  </script>
+  
+</body>
+</html>

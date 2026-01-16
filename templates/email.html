@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+
+
+
+
+  <style>
+    body {
+      background: radial-gradient(circle, rgba(173, 205, 246, 1) 0%, rgba(255, 255, 255, 1) 100%);
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+
+
+
+    h1 {
+      font-size: 45px;
+      font-weight: 600;
+      color: black;
+      margin-bottom: 50px;
+
+
+
+
+    }
+    .bot{
+            margin-top:  10px;
+    }
+    h3 {
+      font-weight: 400;
+      color: #333;
+      margin: 5px o;
+      font-size: 20px;
+    }
+
+
+
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+
+
+
+    input {
+      font-family: "Poppins", sans-serif;
+      border-radius: 50px;
+      border: none;
+      width: 500px;
+      padding: 18px;
+      text-align: center;
+      font-size: 20px;
+      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+      outline: none;
+    }
+
+
+
+
+    input::placeholder {
+      text-align: center;
+      color: #888;
+    }
+
+
+
+
+    button {
+      font-family: "Poppins", sans-serif;
+      padding: 12px 20px;
+      border-radius: 10px;
+      border: none;
+      width: 170px;
+      background-color: #1E3A8A;
+      color: white;
+      cursor: pointer;
+      transition: 0.2s;
+      margin-top: 30px;
+      font-size: 20px;
+    }
+
+
+
+
+    button:hover {
+      background-color: #254ECF;
+    }
+
+
+
+
+    button:active {
+      background-color: #031033;
+      transform: translateY(2px);
+    }
+
+        /* ---------------- VIRTUAL KEYBOARD ---------------- */
+    .virtual-keyboard-container {
+      position: fixed;
+      left: 50%;
+      bottom: 10px;
+      transform: translateX(-50%);
+      background: #e7f3ff;
+      border-radius: 25px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.18);
+      z-index: 9999;
+      display: none;
+      padding: 10px 20px 20px 20px;
+      user-select: none;
+      max-width: 900px;
+    }
+    .vk-header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      font-size: 16px;
+      color: #4d7faf;
+      margin-bottom: 10px;
+      cursor: grab;
+      position: relative;
+    }
+    .vk-close {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px;
+      cursor: pointer;
+      color: #4d7faf;
+    }
+    .vk-row { display: flex; justify-content: center; gap: 8px; margin: 6px 0; flex-wrap: wrap; }
+    .vk-key {
+      flex: 1 0 50px;
+      max-width: 70px;
+      padding: 14px 0;
+      background: #add6ff;
+      border-radius: 10px;
+      border: 2px solid #8fc6ff;
+      color: #003d66;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+    }
+    .vk-key.dark { background: #4b9cff; border-color: #3b8ee8; color: white; }
+    .vk-key.mid { background: #87c2ff; }
+    .vk-key.wide { flex: 1 0 140px; max-width: 180px; }
+    .vk-key.xwide { flex: 2 0 260px; max-width: 300px; }
+    .hidden { display: none; }
+
+    @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  </style>
+
+</head>
+
+<body>
+  <div id="loadingBox" style="
+    display:none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px rgba(0,0,0,0.2);
+    text-align: center;
+    z-index: 9999;
+">
+    <div class="loader" style="
+        border: 6px solid #f3f3f3;
+        border-top: 6px solid #3498db;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: auto;
+    "></div>
+    <p style="margin-top:10px;">Please wait, sending your email...</p>
+</div>
+
+<!-- ------------- -->
+
+<h1>Please enter your Email Address</h1>
+
+
+<form id="emailForm" method="POST" action="/submit">
+  <input type="email" id="email" name="email" placeholder="name@gmail.com" required>
+  <button type="submit" id="submit" name="submit">Submit</button>
+</form>
+
+
+<div class="bot">
+  <h3>The picture you've taken will be sent to your inbox.</h3>
+  <h3>Please make sure to check your spam messages.</h3>
+</div>
+
+
+<!-- Hidden iframe (if needed) -->
+<iframe id="cameraFrame" src="/camera" style="display:none;"></iframe>
+
+
+<!-- Toast popup -->
+<div id="toast" style="
+    display:none;
+    position: fixed;
+    top: 25px;
+    right: 25px;
+    background-color: #95eab8;
+    color: black;
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 10px rgba(0,0,0,0.3);
+    font-weight: bold;
+    z-index: 9999;
+">Photo has been sent!</div>
+
+<!-- ---------------- VIRTUAL KEYBOARD ---------------- -->
+<div id="virtualKeyboardContainer" class="virtual-keyboard-container hidden">
+  <div id="virtualKeyboardHeader" class="vk-header">
+    <span>Virtual Keyboard</span>
+    <span class="vk-close" id="vkCloseBtn">✕</span>
+  </div>
+  <div id="virtualKeyboard" class="virtual-keyboard">
+    <!-- Letters Layout -->
+    <div class="vk-layout" id="lettersLayout">
+      <div class="vk-row">
+        <button class="vk-key">q</button><button class="vk-key">w</button><button class="vk-key">e</button>
+        <button class="vk-key">r</button><button class="vk-key">t</button><button class="vk-key">y</button>
+        <button class="vk-key">u</button><button class="vk-key">i</button><button class="vk-key">o</button><button class="vk-key">p</button>
+      </div>
+      <div class="vk-row">
+        <button class="vk-key">a</button><button class="vk-key">s</button><button class="vk-key">d</button>
+        <button class="vk-key">f</button><button class="vk-key">g</button><button class="vk-key">h</button>
+        <button class="vk-key">j</button><button class="vk-key">k</button><button class="vk-key">l</button>
+      </div>
+      <div class="vk-row">
+        <button class="vk-key shift" data-action="shift">⇧</button>
+        <button class="vk-key">z</button><button class="vk-key">x</button><button class="vk-key">c</button>
+        <button class="vk-key">v</button><button class="vk-key">b</button><button class="vk-key">n</button><button class="vk-key">m</button>
+        <button class="vk-key" data-action="backspace">⌫</button>
+      </div>
+      <div class="vk-row">
+        <button class="vk-key wide" data-action="space">Space</button>
+        <button class="vk-key wide" data-action="enter">Enter</button>
+        <button class="vk-key wide">@gmail.com</button>
+        <button class="vk-key toggle" data-toggle="symbols">123</button>
+      </div>
+    </div>
+
+    <!-- Symbols Layout -->
+    <div class="vk-layout hidden" id="symbolsLayout">
+      <div class="vk-row">
+        <button class="vk-key">1</button><button class="vk-key">2</button><button class="vk-key">3</button>
+        <button class="vk-key">4</button><button class="vk-key">5</button><button class="vk-key">6</button>
+        <button class="vk-key">7</button><button class="vk-key">8</button><button class="vk-key">9</button><button class="vk-key">0</button>
+      </div>
+      <div class="vk-row">
+        <button class="vk-key">!</button><button class="vk-key">@</button><button class="vk-key">.</button>
+        <button class="vk-key">$</button><button class="vk-key">#</button><button class="vk-key">^</button>
+        <button class="vk-key">&</button><button class="vk-key">*</button><button class="vk-key">(</button><button class="vk-key">)</button>
+      </div>
+      <div class="vk-row">
+        <button class="vk-key">-</button><button class="vk-key">_</button><button class="vk-key">=</button>
+        <button class="vk-key">+</button><button class="vk-key">[</button><button class="vk-key">]</button>
+        <button class="vk-key">;</button><button class="vk-key">:</button>
+        <button class="vk-key" data-action="backspace">⌫</button>
+      </div>
+      <div class="vk-row">
+        <button class="vk-key wide" data-action="space">Space</button>
+        <button class="vk-key wide" data-action="enter">Enter</button>
+        <button class="vk-key" data-action="enter">-</button>
+        <button class="vk-key toggle" data-toggle="letters">ABC</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+const form = document.getElementById("emailForm");
+const emailInput = document.getElementById("email");
+const toast = document.getElementById("toast");
+const loadingBox = document.getElementById("loadingBox");
+
+
+form.addEventListener("submit", function(e){
+    e.preventDefault();
+
+
+    const email = emailInput.value.trim();
+
+
+    // Validation
+    if (!email.includes("@") || !email.endsWith("@gmail.com")) {
+        alert("Please enter a valid Gmail address (example@gmail.com)");
+        return;
+    }
+
+
+    // Show loading popup
+    loadingBox.style.display = "block";
+
+
+    // Submit
+    fetch(form.action, {
+        method: "POST",
+        body: new FormData(form)
+    })
+    .then(res => {
+        if(res.ok){
+            // Hide loading
+            loadingBox.style.display = "none";
+
+
+            // Show success popup
+            toast.style.display = "block";
+
+
+            setTimeout(() => {
+                toast.style.display = "none";
+                emailInput.value = "";
+                window.location.href = "/thankyou";
+            }, 2500);
+
+
+        } else {
+            loadingBox.style.display = "none";
+            alert("Failed to send email. Please try again.");
+        }
+    })
+    .catch(err => {
+        loadingBox.style.display = "none";
+        console.error(err);
+        alert("An error occurred.");
+    });
+});
+
+
+</script>
+
+
+<script>
+const vkContainer = document.getElementById('virtualKeyboardContainer');
+const lettersLayout = document.getElementById('lettersLayout');
+const symbolsLayout = document.getElementById('symbolsLayout');
+const vkCloseBtn = document.getElementById('vkCloseBtn');
+
+let isShift = false;
+
+/* SHOW keyboard */
+emailInput.addEventListener('focus', () => {
+  vkContainer.style.display = 'block';
+});
+
+/* CLOSE keyboard */
+vkCloseBtn.addEventListener('click', () => {
+  vkContainer.style.display = 'none';
+});
+
+/* HIDE keyboard when form submits */
+form.addEventListener('submit', () => {
+  vkContainer.style.display = 'none';
+});
+
+/* KEY PRESS */
+vkContainer.addEventListener('click', e => {
+  const key = e.target;
+  if (!key.classList.contains('vk-key')) return;
+
+  const action = key.dataset.action;
+  const toggle = key.dataset.toggle;
+
+  /* Layout toggle */
+  if (toggle === 'symbols') {
+    lettersLayout.classList.add('hidden');
+    symbolsLayout.classList.remove('hidden');
+    return;
+  }
+  if (toggle === 'letters') {
+    symbolsLayout.classList.add('hidden');
+    lettersLayout.classList.remove('hidden');
+    return;
+  }
+
+  /* Shift */
+  if (action === 'shift') {
+    isShift = !isShift;
+    lettersLayout.querySelectorAll('.vk-key').forEach(k => {
+      if (!k.dataset.action && !k.dataset.toggle) {
+        k.textContent = isShift
+          ? k.textContent.toUpperCase()
+          : k.textContent.toLowerCase();
+      }
+    });
+    return;
+  }
+
+  /* Input handling */
+  if (!action) {
+    emailInput.value += key.textContent;
+  } else if (action === 'backspace') {
+    emailInput.value = emailInput.value.slice(0, -1);
+  } else if (action === 'space') {
+    emailInput.value += ' ';
+  } else if (action === 'enter') {
+    vkContainer.style.display = 'none';
+    form.requestSubmit();
+  }
+});
+</script>
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+

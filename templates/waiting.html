@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Loading Page</title>
+<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap" rel="stylesheet">
+<style>
+  body {
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at center, #d9f0ff, #a8d8f0, #82bde6);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+
+  .loading-card {
+    background: #ffffff;
+    border-radius: 25px;
+    box-shadow:
+      25px 25px 60px rgba(0,0,0,0.12),
+      inset 0 0 50px rgba(138, 173, 221, 0.18);
+    text-align: center;
+    width: 1250px;
+    height: 800px;
+  }
+
+
+  .loading-card h1 {
+    font-size: 65px;
+    margin-bottom: 80px;
+    font-family: League Spartan;
+    margin-top: 30px;
+  }
+    .loading-card h2 {
+    font-size: 45px;
+    margin-top: -70px;
+    font-family: League Spartan;
+    margin-left: 50px;
+  }
+
+
+  .loading-card video {
+    height: 600px;
+    user-select: none;
+    margin-top: -30px;
+    border-radius: 15px;
+  }
+</style>
+</head>
+
+
+<body>
+  <div class="loading-card">
+    <h1>Your Picture is printing</h1>
+    <h2>Please wait for a while....</h2>
+
+    
+<!-- VIDEO ELEMENT -->
+    <video id="loadingVideo" autoplay muted>
+      <source src="static/Credit_Vid_Snapbits.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+
+<script>
+  const video = document.getElementById('loadingVideo');
+  video.addEventListener('ended', () => {
+    window.location.href = '/feedback';
+  });
+</script>
+
+</body>
+</html>
+ 
+

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Print Copies</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik+Gemstones&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+<style>
+body {
+  background: radial-gradient(circle, #addcf6 0%, #ffffff 100%);
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Poppins", sans-serif;
+}
+
+.Print_Number-Card {
+  background: #ffffff;
+  border-radius: 25px;
+  box-shadow: 25px 25px 60px rgba(0,0,0,0.12), inset 0 0 50px rgba(138,173,221,0.18);
+  text-align: center;
+  width: 1000px; 
+  height: 500px; 
+}
+
+.Print_Number-Card h1 {
+  font-size: 45px;
+  margin-top: 140px;
+}
+
+.Print_Number-Card button {
+  font-family: "Rubik Gemstones", system-ui;
+  border-radius: 20px;
+  font-size: 25px;
+  border: 2px solid black;
+  width: 150px;
+  height: 75px;
+  margin: 30px;
+  transition: 0.2s all;
+}
+
+.Print_Number-Card button:active {
+  transform: scale(0.98);
+  background-color: palevioletred;
+  box-shadow: inset 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.button1 { background-color: #FFE2E2; }
+.button2 { background-color: #FDFFD1; }
+.button3 { background-color: #F4E7FF; }
+</style>
+</head>
+<body>
+<div class="Print_Number-Card">
+  <h1>Number of Copies</h1>
+  <button type="button" class="button1">1x</button>
+  <button type="button" class="button2">2x</button>
+  <button type="button" class="button3">3x</button>
+</div>
+
+<script>
+const buttons = [
+  { selector: '.button1', copies: 1 },
+  { selector: '.button2', copies: 2 },
+  { selector: '.button3', copies: 3 }
+];
+
+buttons.forEach(btn => {
+  document.querySelector(btn.selector).addEventListener('click', async () => {
+    try {
+      const res = await fetch("/print-image", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ filename: "static/photos/last_photo.png", copies: btn.copies })
+      });
+
+      const data = await res.json();
+      console.log("Response from backend:", data);
+
+      if (!data.success) throw new Error(data.error || "Unknown print error");
+      window.location.href = "/feedback";
+
+    } catch(err) {
+      console.error("❌ Error printing:", err);
+      alert("Failed to print the photo. Check console for details.");
+    }
+  });
+});
+</script>
+
+</body>
+</html>

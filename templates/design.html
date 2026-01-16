@@ -1,0 +1,1528 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circle Swiper</title>
+    <link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Madimi+One&family=Lexend:wght@100..900&family=Reenie+Beanie&display=swap"
+      rel="stylesheet">
+    <style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: linear-gradient(to top right, #C8DBF8 2%, #D6E4F9 27%, #FFFCE9 84%);
+  background-attachment: fixed;
+  overflow: hidden;
+}
+
+
+.row {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 70px;
+  margin-top: 30px;
+  margin-left: -250px;
+}
+
+
+.left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+
+
+}
+.camera-txt p {
+  font-size: 55px;
+  text-align: left;
+  font-family: Reenie Beanie;
+  margin-top: 20px;
+}
+.camera canvas {
+  width: 850px;
+  height: 550px;
+  border: 2px solid #fff;
+  border-radius: 10px;
+}
+
+.button-print button {
+  width: 180px;
+  height: 70px;
+  border: none;
+  border-radius: 20px;
+  background: #FFF7D9;
+  font-size: 20px;
+  cursor: pointer;
+  margin-top: 40px;
+  font-family: Lexend;
+  border: 2px solid #482A41;
+}
+
+.design {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 40px;
+  position: relative;
+
+  width: 600px;
+  max-height: 80vh;
+  margin-top: 110px;
+
+  overflow-y: auto;      
+  overflow-x: hidden;    
+
+  padding-right: 420px; 
+  box-sizing: border-box;
+  margin-right: -400px;
+}
+
+.sticker {
+  position: relative;
+  display: inline-block;
+  font-family: "Madimi One", sans-serif;
+}
+
+
+/* -----------------------------------------BUTTON---------------------------------------------- */
+.dropdown_background,
+.dropdown_sticker,
+.dropdown_filter {
+  position: relative;
+}
+
+
+/* ---------------------------Button Color----------------------------- */
+.dropdown_button.sticker{
+  background: #ffec4f;
+  gap: 45px;
+}
+.dropdown_button.background{
+  background: #EBEFFF;
+  gap: 5px;
+}
+.dropdown_button.filter{
+  background: #FFC58B;
+  gap: 55px;
+}
+.dropdown_button.border{
+  background: #E0FFDC;
+  gap: 45px;
+}
+
+.dropdown_button {
+  background: #ffec4f;
+  color: #333;
+  border: none;
+  padding: 0 25px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 180px;
+  border-radius: 60px;
+  font-family: Madimi One;
+  justify-content: flex-start;
+  height: 60px;
+}
+
+
+.triangle {
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 12px solid white;
+  z-index: 10;
+}
+
+/* ---------------------------Dropdown Color----------------------------- */
+.dropdown_content.sticker{
+  background: #ffec4f;
+}
+.dropdown_content.background{
+  background: #EBEFFF;
+}
+.dropdown_content.filter{
+  background: #FFC58B;
+}
+.dropdown_content.border {
+  background: #E0FFDC;
+}
+
+
+
+.dropdown_content {
+  display: none;
+  border-radius: 20px;
+  padding: 15px;
+  margin-top: 0px;
+  animation: fadeIn 0.2s ease;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  height: 250px;
+  width: 470px;
+  overflow: hidden;
+}
+.dropdown_content.show {
+  display: flex;
+  flex-direction: column;
+}
+.dropdown_button.active{
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  width: 470px;
+  margin-bottom: -20px;
+}
+
+
+
+.sticker-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+
+.btn {
+  background: white;
+  border: none;
+  border-radius: 25px;
+  padding: 6px 15px;
+  font-family: Madimi One;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+
+
+.btn.active {
+  background: #333;
+  color: white;
+}
+
+
+
+.sticker-grid.filter .btn_filter.active {
+  background-color: #333 ;
+  color: white ;    
+}
+
+.sticker-scroll {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 5px;
+}
+
+
+.sticker-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.sticker-scroll::-webkit-scrollbar-thumb {
+  background: #aaa;
+  border-radius: 8px;
+}
+
+
+#stickerWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+
+#stickerWrapper h4 {
+  font-size: 16px;
+  text-align: left;
+  margin: 5px 0;
+}
+
+
+#backgroundWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+
+#backgroundWrapper h4 {
+  font-size: 16px;
+  text-align: left;
+  margin: 5px 0;
+}
+
+#borderWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#borderWrapper h4 {
+  font-size: 16px;
+  text-align: left;
+  margin: 5px 0;
+}
+
+.sticker-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding: 0px 0px 10px 10px;
+}
+
+
+.sticker-grid img {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  background: white;
+  padding: 5px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+}
+.sticker-grid.background img {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  background: white;
+  padding: 5px;
+  object-fit: cover;
+  object-position: center;
+  cursor: pointer;
+}
+
+
+
+.sticker-grid.filter button{
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  background: white;
+  padding: 5px;
+  border: 1px solid #ccc;
+}
+
+.pop {
+  display: none;
+  z-index: 1000;
+  position: fixed;    
+  top: 0;
+  left: 0;
+  width: 100%;  
+  height: 100%;
+}
+
+.popup {
+  font-family: Arial, sans-serif;
+  background-color: #E7F6F3;
+  padding: 10px;
+  text-align: center;
+  border-radius: 15px;
+ width: 100vw;  
+  height: 100vh;
+  overflow: auto;
+  position: relative;
+ width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+    .back {
+      position: absolute;
+      top: 30px;
+      left: 40px;
+      font-size: 23px;
+      text-decoration: none;
+      color: black;
+      border: none;
+      background-color: #E7F6F3;
+    }
+
+    h2 {
+      margin-top: 25px;
+      margin-bottom: 15px;
+    }
+
+    .image-container {
+      background: #FFFFFF;
+      display: inline-block;
+      padding: 10px;
+      border-radius: 15px;
+      border: 2px solid #fffefe;
+    }
+    .image-container img{
+  width: 850px;
+  height: 550px;
+    }
+
+    .question {
+      margin: 30px 0 30px;
+      font-size: 15px;
+    }
+
+    .print-btn {
+      padding: 14px 30px;
+      border: 2px dashed #7C5EFF;
+      border-radius: 25px;
+      background: #FEFEFE;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .print-btn:hover {
+      background: #7C5EFF;
+      color: #FFFFFF;
+    }
+
+    .remove-border-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Lexend", sans-serif;
+    font-size: 14px;
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    background: white;
+    padding: 5px;
+    object-fit: contain;
+    cursor: pointer;
+    border: 1px solid #ccc;
+   }
+
+.remove-border-btn:hover {
+  background: #f3f3f3;
+}
+.filter_preview {
+  object-fit: cover;
+  margin-top: 15px;
+  display: block;
+}
+
+.btn_filter {
+  width: 75px;
+  height: 75px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  transition: 0.2s ease;
+}
+
+</style>
+  </head>
+  <body>
+
+<!-- Warning popup -->
+    <div id="warningPopup" style="
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(255, 255, 255, 0.4);
+    z-index: 10000;
+    justify-content: center;
+    align-items: center;
+">
+      <div style="
+        background: white;
+        padding: 20px 50px;
+        border-radius: 50px;
+        box-shadow: 0px 10px 30px rgba(0,0,0,0.15);
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        border: 1px solid #f0f0f0;
+    ">
+        <img src="{{ url_for('static', filename='Images/catblush.png') }}"
+          style="width: 60px; height: 60px; object-fit: contain;">
+        <span style="
+            font-family: 'Arial', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            color: black;
+            letter-spacing: -0.5px;
+        ">5 Minutes Left!</span>
+      </div>
+    </div>
+
+    <audio id="warningSound"
+      src="{{ url_for('static', filename='sounds/warning.mp3') }}"></audio>
+
+    <div class="row">
+      <div class="left">
+        <div class="camera-txt">
+          <p>Design Your Picture</p>
+        </div>
+        <div class="center">
+          <div class="camera">
+            <canvas id="canvas"></canvas>
+          </div>
+          <div class="button-print">
+            <button class="print" onclick="showPopup()">Print</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="design">
+<!-- Background Dropdown -->
+        <div class="background">
+          <div class="dropdown_background">
+            <button class="dropdown_button background">
+              <div>Backgrounds</div>
+              <div class="triangle"></div>
+            </button>
+            <div class="dropdown_content background">
+              <div class="category">
+                <div class="sticker-buttons">
+                  <button class="btn background"
+                    data-category="Plain Colors">Plain Colors</button>
+                  <button class="btn background"
+                    data-category="Gradient Colors">Gradient Colors</button>
+                  <button class="btn background"
+                    data-category="Others">Others</button>
+                </div>
+              </div>
+              <div class="sticker-scroll">
+                <div class="sticker-grid background"
+                  id="backgroundWrapper"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+<!-- Sticker Dropdown -->
+        <div class="sticker"> <!-- Main container for the sticker feature -->
+
+          <div class="dropdown_sticker">
+            <!-- Wrapper for the sticker dropdown -->
+
+            <button class="dropdown_button sticker">
+              <!-- Button to open/close sticker dropdown -->
+
+              <span class="btn-text">Stickers</span>
+              <!-- Text label of the button -->
+
+              <div class="triangle"></div>
+              <!-- Visual indicator for dropdown -->
+            </button>
+
+            <div class="dropdown_content sticker">
+              <!-- Dropdown content area -->
+
+              <div class="category">
+                <!-- Container for sticker category buttons -->
+                <div class="sticker-buttons">
+
+                  <!-- Category button: filters stickers under "Organization" -->
+                  <button class="btn sticker"
+                    data-category="Org">Organization</button>
+
+                  <!-- Category button: filters stickers under "Events" -->
+                  <button class="btn sticker"
+                    data-category="Events">Events</button>
+
+                  <!-- Category button: filters stickers under "Animals" -->
+                  <button class="btn sticker"
+                    data-category="Animals">Animals</button>
+
+                  <!-- Category button: filters stickers under "Foods & Drinks" -->
+                  <button class="btn sticker" data-category="Foods">Foods &
+                    Drinks</button>
+
+                  <!-- Category button: filters stickers under "Others" -->
+                  <button class="btn sticker"
+                    data-category="Others">Others</button>
+
+                </div>
+              </div>
+
+              <div class="sticker-scroll">
+<!-- Scrollable container for stickers -->
+<!-- Grid where stickers are dynamically loaded based on selected category -->
+    <div class="sticker-grid background" id="stickerWrapper"></div>
+      </div>
+
+</div>
+</div>
+</div>
+
+<!-- Border Dropdown -->
+        <div class="border">
+          <div class="dropdown_border">
+            <button class="dropdown_button border">
+              <span class="btn-text">Borders</span>
+              <div class="triangle"></div>
+            </button>
+            <div class="dropdown_content border">
+              <div class="category">
+                <div class="sticker-buttons">
+                  <button class="btn border" data-category="orgnazations">School
+                    Organization</button>
+                  <button class="btn border"
+                    data-category="Holidayss">Holidays</button>
+                  <button class="btn border"
+                    data-category="Nature">Nature</button>
+                </div>
+              </div>
+              <div class="sticker-scroll">
+                <div class="sticker-grid" id="borderWrapper"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+<!-- Filter Dropdown -->
+<div class="filter"> <!-- Main container for the filter feature -->
+<div class="dropdown_filter"> <!-- Wrapper for the filter dropdown -->
+<button class="dropdown_button filter">
+
+<!-- Button to open/close filter dropdown -->
+<span class="btn-text">Filters</span>
+              <!-- Text label of the button -->
+              <div class="triangle"></div>
+              <!-- Visual indicator for dropdown -->
+            </button>
+
+<div class="dropdown_content filter">
+
+<!-- Dropdown content area for filters -->
+<div class="sticker-scroll">
+
+<!-- Scrollable container for filter options -->
+                <div class="sticker-grid filter">
+
+<!-- Grid layout for filter buttons -->
+
+<!-- Original filter -->
+   <button class="btn_filter" onclick="setActive(this)"
+   data-filter="Original">
+   <img class="filter_preview" id="prev_Original">
+
+<!-- Preview image for Original filter -->
+                    <span>Original</span> <!-- Filter name -->
+                  </button>
+
+<!-- Vivid color enhancement filter -->
+    <button class="btn_filter" onclick="setActive(this)"
+     data-filter="Vivid">
+    <img class="filter_preview" id="prev_Vivid">
+    
+<!-- Preview image for Vivid filter -->
+   <span>Vivid</span>
+   </button>
+
+<!-- Warm tone filter -->
+    <button class="btn_filter" onclick="setActive(this)"
+      data-filter="Warm">
+    <img class="filter_preview" id="prev_Warm">
+
+<!-- Preview image for Warm filter -->
+  <span>Warm</span>
+  </button>
+
+<!-- Cool tone filter -->
+    <button class="btn_filter" onclick="setActive(this)"
+     data-filter="Cool">
+     <img class="filter_preview" id="prev_Cool">
+
+<!-- Preview image for Cool filter -->
+     <span>Cool</span>
+     </button>
+
+<!-- Monochrome (black and white) filter -->
+     <button class="btn_filter" onclick="setActive(this)"
+       data-filter="Mono">
+     <img class="filter_preview" id="prev_Mono">
+
+<!-- Preview image for Mono filter -->
+      <span>Mono</span>
+      </button>
+
+<!-- Sepia tone filter -->
+      <button class="btn_filter" onclick="setActive(this)"
+        data-filter="Sepia">
+      <img class="filter_preview" id="prev_Sepia">
+
+<!-- Preview image for Sepia filter -->
+    <span>Sepia</span>
+    </button>
+
+<!-- High-contrast dramatic filter -->
+      <button class="btn_filter" onclick="setActive(this)"
+      data-filter="Dramatic">
+      <img class="filter_preview" id="prev_Dramatic">
+                    
+<!-- Preview image for Dramatic filter -->
+    <span>Dramatic</span>
+    </button>
+
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+        <div class="pop" id="pop">
+          <div class="popup">
+            <button class="back" onclick="hidePopup()">◀ Go Back</button>
+
+            <h2>Here’s Your Image</h2>
+
+            <div class="image-container">
+              <div class="image-grid">
+                <img id="previewImage" class="preview-Image" alt="Your Photo">
+              </div>
+            </div>
+
+            <p class="question">Are you satisfied with the design?</p>
+
+            <button class="print-btn" onclick="download()">Print My
+              Picture</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="timer" style="
+    position: fixed;       /* always relative to viewport */
+    top: 60px;             /* distance from top */
+    left: 450px;           /* distance from right */
+    font-size: 24px;
+    font-family: Lexend, sans-serif;
+    color: white;
+    background-color: rgba(0,0,0,0.7);
+    border-radius: 40px;
+    z-index: 10000;
+    display: flex;
+    justify-content: center;  /* horizontal center */
+    align-items: center;      /* vertical center */
+    text-align: center;
+    width: 110px;
+    height: 50px;">
+      --:--
+    </div>
+
+
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
+<script>
+
+
+// =========================================
+// Load design photos and template
+// =========================================
+let designData = JSON.parse(localStorage.getItem("designPhotos")) || { photos: [], template: "1" };
+let photos = designData.photos || [];
+let template = designData.template || "1";
+
+
+const capturedPhotos = JSON.parse(localStorage.getItem("capturedPhotos")) || [];
+if (capturedPhotos.length > 0) {
+    const slotCount = template === "1" ? 1 : template === "2" ? 2 : 4;
+    
+    let selectedPhotos = capturedPhotos.slice(-slotCount);
+    
+    while (selectedPhotos.length < slotCount) {
+        selectedPhotos.push("/static/Images/watermark2.png");
+    }
+    
+    designData = { photos: selectedPhotos, template };
+    photos = selectedPhotos;
+    localStorage.setItem("designPhotos", JSON.stringify(designData));
+}
+
+if (!photos || photos.length === 0) {
+    alert("No photos found. Please select photos first."); 
+    window.location.href = "/photoselection";
+}
+
+// =========================================
+// Frame setup
+// =========================================
+const frameBaseURL = "/static/borders/";
+const frames = {
+    orgnazations: {
+        "IBITS": ["IBITS1.png","IBITS2.png","IBITS3.png","IBITS4.png","IBITS5.png"],
+        "YES": ["YES1.png","YES2.png","YES3.png","YES4.png","YES5.png"],
+        "ACES": ["ACES1.png","ACES2.png","ACES3.png","ACES4.png","ACES5.png"],
+        "HRSS": ["HRSS1.png","HRSS2.png","HRSS3.png","HRSS4.png","HRSS5.png"],
+        "JPIA": ["JPIA1.png","JPIA2.png","JPIA3.png","JPIA4.png","JPIA5.png"],
+        "PIIE": ["PIIE1.png","PIIE2.png","PIIE3.png","PIIE4.png","PIIE5.png"],
+        "SMS": ["SMS1.png","SMS2.png","SMS3.png","SMS4.png","SMS5.png"],
+        "PUP": ["PUP1.png","PUP2.png","PUP3.png","PUP4.png","PUP5.png"]
+    },
+    Holidayss: {
+        "Halloween": ["halloween1.png","halloween2.png","halloween3.png","halloween4.png","halloween5.png"],
+        "Christmas": ["christmas1.png","christmas2.png","christmas3.png","christmas5.png"],
+        "Valentines": ["valentines1.png","valentines2.png","valentines3.png","valentines5.png"]
+    },
+    Nature: ["nature1.png","nature2.png","nature3.png","nature4.png","nature5.png"]
+};
+
+// =========================================
+// Canvas setup
+// =========================================
+const canvas = new fabric.Canvas("canvas", {
+    renderOnAddRemove: true,
+    preserveObjectStacking: true,
+    selection: false,
+    skipOffscreen: false
+});
+canvas.setWidth(850);
+canvas.setHeight(550);
+canvas.setBackgroundColor("white", canvas.renderAll.bind(canvas));
+
+canvas.on("object:moving", () => canvas.renderAll());
+canvas.on("object:scaling", () => canvas.renderAll());
+canvas.on("object:rotating", () => canvas.renderAll());
+
+canvas.selectionColor = "rgba(0,0,0,0)";
+canvas.selectionBorderColor = "rgba(0,0,0,0)";
+canvas.selectionLineWidth = 0;
+
+// =========================================
+// WATERMARK SETUP
+// =========================================
+const WATERMARK_URL = "/static/Images/watermark2.png";
+const WATERMARK_SCALE = 0.25;
+const WATERMARK_MARGIN = 5;
+let watermarkObj = null;
+
+function addWatermark() {
+    fabric.Image.fromURL(WATERMARK_URL, img => {
+        img.set({
+            scaleX: WATERMARK_SCALE,
+            scaleY: WATERMARK_SCALE,
+            opacity: 0.6,
+            selectable: false,
+            evented: false,
+            originX: "right",
+            originY: "bottom",
+            left: canvas.width - WATERMARK_MARGIN,
+            top: canvas.height - WATERMARK_MARGIN + 35,
+            isWatermark: true,
+            objectCaching: false
+        });
+        watermarkObj = img;
+        canvas.add(img);
+        canvas.bringToFront(img);
+        canvas.renderAll();
+    }, { crossOrigin: "anonymous" });
+}
+
+canvas.on("object:added", () => {
+    if (watermarkObj) canvas.bringToFront(watermarkObj);
+});
+
+// =========================================
+// positions by template
+// =========================================
+function getSlotPositionsByTemplate(template) {
+    if (template === "1") return [{ x:50, y:50, width:750, height:450 }];
+    if (template === "2") return [
+        { x:435, y:20, width:390, height:240 },
+        { x:20, y:285, width:390, height:240 }
+    ];
+    if (template === "3") return [
+        { x:20, y:20, width:390, height:240 },
+        { x:435, y:20, width:390, height:240 },
+        { x:20, y:285, width:390, height:240 },
+        { x:435, y:285, width:390, height:240 }
+    ];
+    return [{ x:50, y:50, width:750, height:450 }];
+}
+
+// =========================================
+// Border expansion config
+// =========================================
+const borderConfig = {
+    1: { expandX: 40, expandY: 55, offsetX: 2, offsetY: 0 },
+    2: { expandX: 20, expandY: 30, offsetX: 0, offsetY: 0 },
+    4: { expandX: 20, expandY: 30, offsetX: 0, offsetY: 0 }
+};
+
+let currentBorders = [];
+
+// =========================================
+// Load photos on canvas
+// =========================================
+function loadPhotos() {
+    const slots = getSlotPositionsByTemplate(template);
+    photos.forEach((photoSrc, i) => {
+        const slot = slots[i] || slots[slots.length - 1];
+        fabric.Image.fromURL(photoSrc, img => {
+            img.set({
+                left: slot.x,
+                top: slot.y,
+                scaleX: slot.width / img.width,
+                scaleY: slot.height / img.height,
+                selectable: false,
+                evented: false,
+                originX: "left",
+                originY: "top",
+                isPhoto: true,
+                flipX: true,
+                objectCaching: false
+            });
+            canvas.add(img);
+            canvas.renderAll();
+        }, { crossOrigin: "anonymous" });
+    });
+}
+
+// =========================================
+// Apply border
+// =========================================
+function applyBorderToPhotos(frameUrl) {
+    currentBorders.forEach(b => canvas.remove(b));
+    currentBorders = [];
+
+    const photoObjects = canvas.getObjects().filter(obj => obj.isPhoto);
+    if (!photoObjects.length) return;
+
+    const positions = getSlotPositionsByTemplate(template);
+    const cfg = borderConfig[photoObjects.length] || {};
+    
+    photoObjects.forEach((photo, i) => {
+        const pos = positions[i];
+        fabric.Image.fromURL(frameUrl, frame => {
+            frame.set({
+                left: pos.x - (cfg.expandX || 0),
+                top: pos.y - (cfg.expandY || 0),
+                scaleX: (pos.width + (cfg.expandX||0)*2) / frame.width,
+                scaleY: (pos.height + (cfg.expandY||0)*2) / frame.height,
+                selectable: false,
+                evented: false
+            });
+            canvas.add(frame);
+            canvas.moveTo(frame, canvas.getObjects().indexOf(photo) + 1);
+            currentBorders.push(frame);
+            canvas.renderAll();
+        }, { crossOrigin: "anonymous" });
+    });
+}
+
+  function createRemoveButton() {
+    const removeDiv = document.createElement("div"); 
+    removeDiv.classList.add("sticker-item", "remove-border-btn");
+    removeDiv.textContent = "Remove Border"; 
+    removeDiv.addEventListener("click", () => { 
+      currentBorders.forEach(b => canvas.remove(b)); 
+      currentBorders = [];
+      canvas.renderAll();
+    });
+    return removeDiv; 
+  }
+
+
+
+const borderWrapper = document.getElementById("borderWrapper");
+
+function showBorders(category) {
+    borderWrapper.innerHTML = "";
+    const subcats = frames[category];
+    if (!subcats) return;
+
+    Object.entries(subcats).forEach(([name, files]) => {
+        const title = document.createElement("h4");
+        title.textContent = name;
+        title.style.fontFamily = "Lexend";
+        borderWrapper.appendChild(title);
+
+        const grid = document.createElement("div");
+        grid.classList.add("sticker-grid");
+        grid.appendChild(createRemoveButton());
+        files.forEach(file => {
+            const img = document.createElement("img");
+            img.src = frameBaseURL + file;
+            img.classList.add("sticker-item");
+            img.onclick = () => applyBorderToPhotos(frameBaseURL + file);
+            grid.appendChild(img);
+        });
+
+        borderWrapper.appendChild(grid);
+    });
+}
+
+document.querySelectorAll(".btn.border").forEach(btn => {
+    btn.onclick = () => {
+        document.querySelectorAll(".btn.border").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        showBorders(btn.dataset.category);
+    };
+});
+
+
+loadPhotos();
+addWatermark();
+showBorders("orgnazations");
+
+</script>
+
+    <script>
+let remaining = 0;
+let totalDuration = 0;
+let timerInterval = null;
+let halfWarningTriggered = false;
+
+async function fetchInitialTime() {
+  try {
+    const res = await fetch("/get_remaining_time");
+    const data = await res.json();
+    remaining = data.remaining || 0;
+    totalDuration = data.total || 0;
+
+    if (remaining <= totalDuration / 2) {
+      applyHalfWarning(false); 
+      halfWarningTriggered = true;
+    }
+
+  } catch (err) {
+    console.error("Error fetching remaining time:", err);
+    remaining = 0;
+  }
+}
+
+
+function applyHalfWarning(showPopup = true) {
+  const timerEl = document.getElementById("timer");
+  if (timerEl) {
+    timerEl.style.backgroundColor = "red";
+    timerEl.style.color = "black";
+  }
+
+  if (showPopup) {
+    const popup = document.getElementById("warningPopup");
+    const sound = document.getElementById("warningSound");
+
+    if (popup) popup.style.display = "flex";
+    if (sound) sound.play();
+
+    setTimeout(() => {
+      if (popup) popup.style.display = "none";
+    }, 2000);
+  }
+}
+
+
+async function saveCanvasPhoto() {
+  if (!canvas) return;
+
+
+  canvas.renderAll();
+
+
+  await new Promise(r => setTimeout(r, 50));
+
+  const imageData = canvas.toDataURL("image/png");
+
+  await fetch("/save_photo", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ image: imageData })
+  });
+
+  console.log("✅ Canvas saved successfully");
+}
+
+function tick() {
+  const mins = Math.floor(remaining / 60);
+  const secs = remaining % 60;
+
+  const timerEl = document.getElementById("timer");
+  if (timerEl) {
+    timerEl.innerText = `${mins}:${secs.toString().padStart(2,"0")}`;
+  }
+
+  if (!halfWarningTriggered && remaining <= totalDuration / 2) {
+    halfWarningTriggered = true;
+    applyHalfWarning(true);
+  }
+
+if (remaining <= 0) {
+  clearInterval(timerInterval);
+
+  if (typeof canvas !== "undefined" && canvas) {
+    saveCanvasPhoto().finally(() => {
+      window.location.href = "/numberOfCopies";
+    });
+  } else {
+    window.location.href = "/numberOfCopies";
+  }
+
+  return;
+}
+
+
+  remaining--;
+}
+
+
+async function startTimer() {
+  await fetchInitialTime();
+  tick();
+  timerInterval = setInterval(tick, 1000);
+}
+
+startTimer();
+</script>
+
+<!-- -----FILTERS----- -->
+<script>
+const filters = {
+  Original: {}, 
+  Vivid: { brightness: 0.05, contrast: 0.15 }, 
+  Warm: { brightness: 0.05, contrast: 0.1, red: 1.1, green: 1.05, blue: 0.95 }, 
+  Cool: { brightness: 0, contrast: 0.05, red: 0.9, green: 1, blue: 1.1 },
+  Mono: { grayscale: true, contrast: 0.2 }, 
+  Sepia: { sepia: true, contrast: 0.1 }, 
+  Dramatic: { brightness: -0.1, contrast: 0.25 } 
+};
+
+function applyFilterToImage(obj, f) {
+  const newFilters = [];
+
+  if (f.grayscale) newFilters.push(new fabric.Image.filters.Grayscale()); 
+  if (f.sepia) newFilters.push(new fabric.Image.filters.Sepia());
+  if (f.brightness !== undefined) newFilters.push(new fabric.Image.filters.Brightness({ brightness: f.brightness })); 
+  if (f.contrast !== undefined) newFilters.push(new fabric.Image.filters.Contrast({ contrast: f.contrast })); 
+
+  if (f.red || f.green || f.blue) {
+    newFilters.push(new fabric.Image.filters.ColorMatrix({ 
+      matrix: [
+        f.red || 1, 0, 0, 0, 0, 
+        0, f.green || 1, 0, 0, 0, 
+        0, 0, f.blue || 1, 0, 0, 
+        0, 0, 0, 1, 0 
+      ]
+    }));
+  }
+
+  obj.filters = newFilters; 
+  obj.applyFilters(); 
+}
+
+function applyFilterToAllPhotos(filterName) {
+  const settings = filters[filterName]; 
+  if (!settings) return; 
+
+  const photos = canvas.getObjects().filter(o => o.isPhoto); 
+
+  photos.forEach(photo => {
+    applyFilterToImage(photo, settings); 
+    photo.applyFilters();
+  });
+
+  canvas.renderAll(); 
+}
+
+
+function generateFilterPreviews() {
+  if (!photos || photos.length === 0) return;
+  const imgSrc = photos[0]; 
+
+  fabric.Image.fromURL(imgSrc, baseImg => {
+    Object.keys(filters).forEach(filterName => {
+      const f = filters[filterName];
+
+      baseImg.clone(clonedImg => {
+        applyFilterToImage(clonedImg, f);
+
+        clonedImg.set({ flipX: true });
+
+        const previewSize = 70;
+        const scale = Math.max(previewSize / clonedImg.width, previewSize / clonedImg.height);
+        clonedImg.scale(scale);
+
+        const cropX = (clonedImg.getScaledWidth() - previewSize) / 2;
+        const cropY = (clonedImg.getScaledHeight() - previewSize) / 2;
+
+        const tempCanvas = document.createElement("canvas");
+        tempCanvas.width = previewSize;
+        tempCanvas.height = previewSize;
+        const ctx = tempCanvas.getContext("2d");
+
+        clonedImg.applyFilters();
+
+        ctx.drawImage(
+          clonedImg._element,
+          cropX / clonedImg.scaleX,
+          cropY / clonedImg.scaleY,
+          previewSize / clonedImg.scaleX,
+          previewSize / clonedImg.scaleY,
+          0, 0, previewSize, previewSize
+        );
+
+        const imgEl = document.getElementById("prev_" + filterName);
+        if (imgEl) {
+          imgEl.src = tempCanvas.toDataURL("image/png");
+          imgEl.width = 60;
+          imgEl.height = 60;
+          imgEl.style.borderRadius = "50%"; 
+        }
+      });
+    });
+  }, { crossOrigin: "Anonymous" });
+}
+
+function setActive(btn) {
+  document.querySelectorAll(".btn_filter").forEach(b => b.classList.remove("active")); 
+  btn.classList.add("active"); 
+
+  const filterName = btn.dataset.filter; 
+  applyFilterToAllPhotos(filterName); 
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  setTimeout(generateFilterPreviews, 1500); 
+});
+</script>
+
+<!-- PARA SA BACKGROUND -->
+<script>
+const backgroundBaseURL = "/static/backgrounds/";
+const getBackgroundURL = (filename) => `${backgroundBaseURL}${filename}?v=${Date.now()}`;
+
+const backgrounds = {
+  "Plain Colors": ["7.png","8.png","9.png","10.png","11.png","14.png","15.png","16.png","19.png","20.png"], 
+  "Gradient Colors": ["12.png","13.png","17.png","18.png"], 
+  "Others": ["1.png","2.png","3.png","4.png","5.png","6.png","21.png","22.png","23.png","24.png","25.png"] 
+};
+
+
+const backgroundWrapper = document.getElementById("backgroundWrapper");
+
+
+function showBackgrounds(category) {
+  backgroundWrapper.innerHTML = ""; 
+  const subcats = backgrounds[category]; 
+  if (!subcats) return; 
+
+  function createRemoveButton() {
+    const removeDiv = document.createElement("div"); 
+    removeDiv.textContent = "Remove Bg"; 
+    removeDiv.classList.add("remove-border-btn"); 
+    removeDiv.style.cursor = "pointer"; 
+
+   
+    removeDiv.addEventListener("click", () => {
+      canvas.setBackgroundImage(null); 
+      canvas.renderAll(); 
+    });
+
+    return removeDiv; 
+  }
+
+  if (typeof subcats === "object" && !Array.isArray(subcats)) {
+    for (const [subName, files] of Object.entries(subcats)) { 
+      const title = document.createElement("h4"); 
+      title.textContent = subName; 
+      title.style.fontFamily = "Lexend"; 
+      title.style.margin = "10px 0 5px"; 
+      title.style.textAlign = "left"; 
+      backgroundWrapper.appendChild(title); 
+      const grid = document.createElement("div");
+      grid.classList.add("sticker-grid", "background"); 
+      grid.appendChild(createRemoveButton()); 
+
+      files.forEach(file => { 
+        const img = document.createElement("img");
+        img.src = getBackgroundURL(file); 
+        img.classList.add("background-item"); 
+
+        img.addEventListener("click", () => changeBackground(img)); 
+        grid.appendChild(img); 
+      });
+
+      backgroundWrapper.appendChild(grid); 
+    }
+  }
+
+
+  else if (Array.isArray(subcats)) {
+    const grid = document.createElement("div"); 
+    grid.classList.add("sticker-grid", "background"); 
+    grid.appendChild(createRemoveButton()); 
+
+    subcats.forEach(file => { 
+      const img = document.createElement("img"); 
+      img.src = getBackgroundURL(file);
+      img.classList.add("background-item"); 
+
+      img.addEventListener("click", () => changeBackground(img)); 
+      grid.appendChild(img); 
+    });
+
+    backgroundWrapper.appendChild(grid); 
+  }
+}
+
+
+document.querySelectorAll(".btn.background").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".btn.background").forEach(b => b.classList.remove("active")); 
+    btn.classList.add("active"); 
+    showBackgrounds(btn.dataset.category); 
+  });
+});
+
+
+function changeBackground(el) {
+  const imgUrl = el.src; 
+
+  fabric.Image.fromURL(imgUrl, function(img) { 
+    canvas.setBackgroundImage( 
+      img,
+      canvas.renderAll.bind(canvas), 
+      {
+        scaleX: canvas.width / img.width, 
+        scaleY: canvas.height / img.height, 
+        originX: "left", 
+        originY: "top" 
+      }
+    );
+  }, { crossOrigin: "anonymous" }); 
+}
+
+
+showBackgrounds("Plain Colors"); 
+document.querySelector('[data-category="Plain Colors"]').classList.add("active"); 
+</script>
+
+<!-- STICKERS -->
+<script>
+const stickerBaseURL = "/static/stickers/";
+
+
+const getStickerURL = (filename) => `${stickerBaseURL}${filename}?v=${Date.now()}`;
+
+
+const categories = {
+  Org: {
+    "Organizations": ["org1.png","org2.png","org3.png","org4.png","org5.png","org6.png","org7.png","org8.png"],
+    "Others": ["org9.png"]
+  },
+  Events: {
+    "Halloween": ["h1.png","h2.png","h3.png","h4.png"],
+    "Christmas": ["c1.png","c2.png","c3.png","c4.png","c5.png","c6.png"],
+    "Valentines": ["v1.png","v2.png","v3.png","v4.png","v5.png","v6.png","v7.png"]
+  },
+  Others: {
+    "Others": ["o1.png","o2.png","o3.png","o4.png","o5.png","o6.png","o7.png","o8.png","o9.png","o10.png","o11.png","o12.png","o13.png","o14.png","o15.png","o16.png","o17.png","o18.png","o19.png"],
+    "Emoticons": ["e1.png","e2.png","e3.png","e4.png","e5.png","e6.png"],
+    "Nature": ["n1.png","n3.png"]
+  },
+  Animals: ["a1.png","a2.png","a3.png","a4.png","a5.png","a6.png","a7.png","a8.png","a9.png","a10.png","a11.png","a12.png","a13.png","a14.png","a15.png","a16.png","a17.png","a18.png"],
+  Foods: ["f1.png","f2.png","f3.png","f4.png"]
+};
+
+const stickerWrapper = document.getElementById("stickerWrapper");
+
+
+const deleteImg = new Image();
+deleteImg.src = "https://cdn-icons-png.flaticon.com/512/5974/5974771.png";
+
+
+deleteImg.onload = () => {
+  console.log("Delete image loaded and ready to render!");
+};
+
+function showStickers(category) {
+  stickerWrapper.innerHTML = "";
+  const subcats = categories[category];
+  if (!subcats) return;
+
+  if (typeof subcats === "object" && !Array.isArray(subcats)) {
+    for (const [subName, files] of Object.entries(subcats)) {
+      const title = document.createElement("h4");
+      title.textContent = subName;
+      title.style.fontFamily = "Lexend";
+      title.style.margin = "10px 0 5px";
+      title.style.textAlign = "left";
+      stickerWrapper.appendChild(title);
+
+      const grid = document.createElement("div");
+      grid.classList.add("sticker-grid");
+
+      files.forEach(file => {
+        const img = document.createElement("img");
+        img.src = getStickerURL(file);
+        img.dataset.img = getStickerURL(file);
+        img.classList.add("sticker-item");
+        img.addEventListener("click", () => addSticker(img));
+        grid.appendChild(img);
+      });
+
+      stickerWrapper.appendChild(grid);
+    }
+  } else if (Array.isArray(subcats)) {
+    const grid = document.createElement("div");
+    grid.classList.add("sticker-grid");
+
+    subcats.forEach(file => {
+      const img = document.createElement("img");
+      img.src = getStickerURL(file);
+      img.dataset.img = getStickerURL(file);
+      img.classList.add("sticker-item");
+      img.addEventListener("click", () => addSticker(img));
+      grid.appendChild(img);
+    });
+
+    stickerWrapper.appendChild(grid);
+  }
+}
+
+document.querySelectorAll(".btn.sticker").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".btn.sticker").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    showStickers(btn.dataset.category);
+  });
+});
+
+function addSticker(el) {
+  const imgUrl = el.dataset.img;
+
+  fabric.Image.fromURL(imgUrl, function(sticker) {
+    sticker.set({
+      left: 150,
+      top: 100,
+      scaleX: 0.3,
+      scaleY: 0.3,
+      selectable: true,
+      objectCaching: false,
+      noScaleCache: true,
+      transparentCorners: true
+    });
+
+
+    sticker.controls.deleteControl = new fabric.Control({
+      x: 0.5,
+      y: -0.5,
+      offsetX: 16,
+      offsetY: -16,
+      cursorStyle: "pointer",
+      mouseUpHandler: function(_, transform) {
+        canvas.remove(transform.target);
+        canvas.requestRenderAll();
+      },
+      render: function(ctx, left, top) {
+        const size = 20;
+        if (deleteImg.complete && deleteImg.naturalWidth > 0) {
+          ctx.drawImage(deleteImg, left - size / 2, top - size / 2, size, size);
+        }
+      }
+    });
+
+    canvas.add(sticker);
+    canvas.setActiveObject(sticker);
+    canvas.requestRenderAll();
+  }, { crossOrigin: "anonymous" });
+}
+
+showStickers("Org");
+document.querySelector('[data-category="Org"]').classList.add("active");
+</script>
+
+<script>
+document.querySelectorAll(".dropdown_button").forEach(button => {
+  button.addEventListener("click", (e) => {
+    e.stopPropagation(); 
+    const dropdown = button.nextElementSibling; 
+    dropdown.classList.toggle("show"); 
+    button.classList.toggle('active'); 
+  });
+});
+
+window.addEventListener("click", (event) => {
+  if (!event.target.closest(".dropdown_background") &&
+      !event.target.closest(".dropdown_sticker") &&
+      !event.target.closest(".dropdown_border") &&
+      !event.target.closest(".dropdown_filter")) {
+   
+    document.querySelectorAll(".dropdown_content").forEach(drop => {
+      drop.classList.remove("show"); 
+      drop.previousElementSibling.classList.remove("active");
+    });
+  }
+});
+</script>
+<!-- DOWNLOADING IMAGE -->
+    <script>
+function download() {
+    const imageData = canvas.toDataURL("image/png"); 
+
+    fetch("/save_photo", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ image: imageData }) 
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log("✅ Current photo saved:", data.filename);
+
+        window.location.href = "/numberOfCopies";
+    })
+    .catch(err => {
+        console.error("❌ Error saving photo:", err);
+        alert("Failed to save the photo. Try again!");
+    });
+}
+</script>
+
+<!-- CONFIRMATION PAGE -->
+<script>
+
+var div = document.getElementById('pop');
+var previewImg = document.getElementById('previewImage');
+
+
+function showPopup(){
+  div.style.display = 'block'; 
+  const imageData = canvas.toDataURL("image/png");
+  previewImg.src = imageData; 
+}
+
+function hidePopup(){
+  div.style.display = 'none'; 
+}
+</script>
+
+    <script src="{{ url_for('static', filename='js/timer.js') }}"></script>
+
+  </body>
+</html>

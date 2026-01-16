@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Choose your Photo</title>
+</head>
+<style>
+    .poppins-medium {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+}
+
+.pacifico-regular {
+  font-family: "Pacifico", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.dancing-script {
+  font-family: "Dancing Script", cursive;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+/*When putting it in the middle, make sure that the padding is: */
+/*padding: 100px 20px 0px 20px;*/
+/*if through web without the F11, put the padding in-- padding: 0px 20px 0px 20px;*/
+/*For web, */
+
+body {
+    background-color: #fffef7;
+    font-family: "Poppins", sans-serif;
+    font-weight: 200;
+    margin: 0;
+    padding: 0px 20px 0px 10px;
+    overflow: hidden;
+    background: #FFE4E1;
+    background: radial-gradient(circle, rgba(173, 205, 246, 3) 0%, rgba(255, 255, 255, 2) 100%);
+}
+
+.main-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+}
+
+.div--main--photo {
+    margin-top: 20px;
+}
+
+
+/*This is the template 1
+
+.div--image--main--container img {
+    width: 580px;
+    height: 430px;
+}
+
+*/
+
+/*This is for the template 2
+.div--image--main--container img {
+    width: 280px;
+    height: 430px;
+}*/
+
+/*This is for template 4*/
+.div--image--main--container img {
+    width: 280px;
+    height: 220px;
+}
+
+
+/*This is the final photo or the template. This is where the picture will went when choosing.
+.div--image--main--container {
+      width: 600px;
+      height: 455px;
+      background: #FFFFFF;
+      display: inline-block;
+      padding-top: 20px;
+      padding-left: 20px;
+      padding-bottom: 10px;
+      margin-top: 15px;
+      margin-left: 30px;
+      border-radius: 15px;
+      border: 2px solid #fffefe;
+    }*/
+
+/*This is the template for Template 2
+.div--image--main--container {
+      width: 600px;
+      height: 455px;
+      background: #FFFFFF;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      padding-top: 20px;
+      padding-left: 20px;
+      padding-bottom: 10px;
+      margin-top: 15px;
+      margin-left: 30px;
+      border-radius: 15px;
+      border: 2px solid #fffefe;
+    }*/
+
+/*This is for Template 4*/
+.div--image--main--container {
+      width: 600px;
+      height: 455px;
+      background: #FFFFFF;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(4, 1fr);
+      padding-top: 20px;
+      padding-left: 20px;
+      padding-bottom: 10px;
+      margin-top: 15px;
+      margin-left: 30px;
+      border-radius: 15px;
+      border: 2px solid #fffefe;
+      gap: 5px;
+    }
+
+
+/*This are the rows of photo for users to choose to put in the template*/
+.div--other--photo--container {
+    width: 180px;
+    height: 180px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    padding-top: 20px;
+    padding-left: 50px;
+    margin-left: 50px;
+    margin-top: 40px;
+    gap: 15px;
+    width: 500px;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+h1 {
+    margin-left: 30px;
+    margin-bottom: 20px;
+    font-family: "Dancing Script", cursive;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: black;
+    padding-top: 10px;
+}
+
+.photos {
+    width: 200px;
+    height: 120px;
+}
+
+.Template_2 {
+    width: 245px;
+    height: 215px;
+}
+
+.Template_3 {
+    width: 200px;
+    height: 120px;
+}
+</style>
+<body>
+
+<div class = "main-container">
+  <div class = "div--main--photo">
+    <h1>Choose the photo you want in your frame</h1>
+    <div class = "div--image--main--container">
+
+    <!--The ID is the connection ID for the javascript-->
+      <!--<img id = "previewImage" class = "preview-Image" alt="YourCute_Photo">
+        <img src="Images/image/Frame Borders.png" alt="Sample 1">-->
+
+        <!--For 2 pictures
+        <img src="Images/image/Frame Borders.png"  class = "Template_2" alt="Sample 2">
+        <img src="Images/image/Frame Borders.png"  class = "Template_2" alt="Sample 2">-->
+
+        <!--For 4 pictures-->
+        <img src="Images/image/Frame Borders.png"  class = "Template_3" alt="Sample 4">
+        <img src="Images/image/Frame Borders.png"  class = "Template_3" alt="Sample 4">
+        <img src="Images/image/Frame Borders.png"  class = "Template_3" alt="Sample 4">
+        <img src="Images/image/Frame Borders.png"  class = "Template_3" alt="Sample 4">
+        
+    </div>
+  </div>
+
+  <div class = "div--choose--photo">
+    <div class = "div--other--photo--container">
+      <!--<img id = "choosePhoto" class = "Choose-photo" alt="SnapBits_Photo">-->
+        <img src="Images/image/Frame Borders.png" class = "photos" alt="Sample 1">
+        <img src="Images/image/Frame Borders.png" class = "photos" alt="Sample 2">
+        <img src="Images/image/Frame Borders.png" class = "photos" alt="Sample 3">
+        <img src="Images/image/Frame Borders.png" class = "photos" alt="Sample 4">
+        <img src="Images/image/Frame Borders.png" class = "photos" alt="Sample 5">
+        <img src="Images/image/Frame Borders.png" class = "photos" alt="Sample 6">
+        <img src="Images/image/Frame Borders.png" class = "photos" alt="Sample 7">
+        <img src="Images/image/Frame Borders.png" class = "photos" alt="Sample 8">
+        <br>
+        <br>
+        <a href="#" class="back"> ◀ Done</a>
+    </div>
+  </div>
+</div>
+ <br>
+ <script src ="Choose_Photo_display.js"></script>
+</body>
+</head>
+</html>

@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Circle Swiper</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css">
+  <link href="https://fonts.googleapis.com/css2?family=Madimi+One&family=Lexend:wght@100..900&family=Reenie+Beanie&display=swap" rel="stylesheet">
+<style>
+  /* 🎨 Basic reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: linear-gradient(to top right, #C8DBF8 2%, #D6E4F9 27%, #FFFCE9 84%);
+  background-attachment: fixed;
+  overflow: hidden;
+}
+
+/* 📸 Layout */
+.row {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* ✅ top-align so left doesn’t move */
+  gap: 70px;
+  margin-top: 30px;
+  margin-left: -250px;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+
+}
+
+.camera-txt p {
+  font-size: 55px;
+  text-align: left;
+  font-family: Reenie Beanie;
+  margin-top: 20px;
+}
+
+.camera canvas {
+  width: 850px;
+  height: 550px;
+  border: 2px solid #fff;
+  border-radius: 10px;
+}
+
+/* 🖨️ Print button */
+.button-print button {
+  width: 180px;
+  height: 70px;
+  border: none;
+  border-radius: 20px;
+  background: #FFF7D9;
+  font-size: 20px;
+  cursor: pointer;
+  margin-top: 40px;
+  font-family: Lexend;
+  border: 2px solid #482A41;
+}
+
+
+/* 🎀 Right panel */
+.design {
+  display: flex;
+  flex-direction: column; 
+  align-items: flex-start;
+  gap: 40px;
+  position: relative;
+  width: 200px; /* fixed width to avoid flex resizing */
+  margin-top: 110px;
+}
+
+.sticker {
+  position: relative;
+  display: inline-block;
+  font-family: "Madimi One", sans-serif;
+}
+.dropdown_background,
+.dropdown_sticker,
+.dropdown_filter {
+  position: relative;
+
+}
+.dropdown_button.sticker{
+  background: #ffec4f;
+}
+.dropdown_button.background{
+  background: #EBEFFF;
+}
+.dropdown_button.filter{
+  background: #FFC58B;
+}
+/* 🟡 Main Button */
+.dropdown_button {
+  background: #ffec4f;
+  color: #333;
+  border: none;
+  padding: 0 25px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 180px;
+  border-radius: 60px;
+  font-family: Madimi One;
+  justify-content: flex-start; /* triangle stays left */
+  gap: 40px;
+  height: 60px;
+}
+
+/* Triangle icon */
+.triangle {
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 12px solid white;
+  z-index: 10;
+} 
+
+/* 🧩 Dropdown Content */
+.dropdown_content.sticker{
+  background: #ffec4f;
+}
+.dropdown_content.background{
+  background: #EBEFFF;
+}
+.dropdown_content.filter{
+  background: #FFC58B;
+}
+
+.dropdown_content {
+  display: none;
+  border-radius: 20px;
+  padding: 15px;
+  margin-top: 0px;
+  animation: fadeIn 0.2s ease;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  height: 250px;
+  width: 470px;
+  overflow: hidden; /* hide outer scroll */
+}
+
+/* Show dropdown */
+.dropdown_content.show {
+  display: flex;
+  flex-direction: column;
+}
+.dropdown_button.active{
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  width: 470px;
+  margin-bottom: -20px;
+}
+
+/* 🟩 Category Buttons */
+.sticker-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  background: white;
+  border: none;
+  border-radius: 25px;
+  padding: 6px 15px;
+  font-family: Madimi One;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.btn.active {
+  background: #333;
+  color: white;
+}
+
+/* 🖼️ Scrollable Area */
+.sticker-scroll {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 5px;
+}
+/* Scrollbar style */
+.sticker-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.sticker-scroll::-webkit-scrollbar-thumb {
+  background: #aaa;
+  border-radius: 8px;
+}
+
+/* 🧱 Sticker Wrapper (Vertical Layout) */
+#stickerWrapper {
+  display: flex;
+  flex-direction: column; /* ✅ vertical stacking */
+  gap: 10px;
+}
+
+/* 🪩 Subcategory Title */
+#stickerWrapper h4 {
+  font-size: 16px;
+  text-align: left;
+  margin: 5px 0;
+}
+
+#borderWrapper {
+  display: flex;
+  flex-direction: column; /* ✅ vertical stacking */
+  gap: 10px;
+}
+
+/* 🪩 Subcategory Title */
+#borderWrapper h4 {
+  font-size: 16px;
+  text-align: left;
+  margin: 5px 0;
+}
+
+/* 🧱 Sticker Grid (images per row) */
+.sticker-grid {
+  display: grid; /* ✅ force grid display */
+  grid-template-columns: repeat(4, 1fr); /* ✅ exactly 4 columns */
+  gap: 20px;
+  padding: 0px 0px 10px 10px;
+}
+
+/* 🐾 Stickers */
+.sticker-grid img {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  background: white;
+  padding: 5px;
+  object-fit: contain;
+  cursor: pointer;
+  border: 1px solid #ccc;
+}
+
+
+
+
+/* 🪞 Popup */
+.pop {
+            display: none; 
+            z-index: 1000;
+              position: fixed;     /* ✅ make it fixed to viewport */
+  top: 0;
+  left: 0;
+ width: 100%;   /* full screen width */
+  height: 100%;
+
+}
+
+.popup {
+  font-family: Arial, sans-serif;
+  background-color: #E7F6F3;
+  padding: 30px;
+  text-align: center;
+  border-radius: 15px;
+ width: 100vw;   /* full screen width */
+  height: 100vh;  /* ✅ responsive height */
+  overflow: auto;   /* ✅ scroll if content too tall */
+  position: relative;
+ width: 100vw;
+  height: 100vh;
+  display: flex;             /* make it flex */
+  align-items: center;       /* center vertically */
+  justify-content: center;   /* center horizontally */
+  flex-direction: column;    /* stack content */
+}
+
+
+    .back {
+      position: absolute;
+      top: 30px;
+      left: 40px;
+      font-size: 23px;
+      text-decoration: none;
+      color: black;
+      border: none;
+      background-color: #E7F6F3;
+    }
+
+    h2 {
+      margin-top: 25px;
+      margin-bottom: 15px;
+    }
+
+    /* frame style*/
+    .image-container {
+      background: #FFFFFF;
+      display: inline-block;
+      padding: 20px;
+      border-radius: 15px;
+      border: 2px solid #fffefe; 
+    }
+    .image-container img{
+      width: 680px;
+      height: 420px;
+    }
+    .question {
+      margin: 30px 0 30px;
+      font-size: 15px;
+    }
+
+    .print-btn {
+      padding: 14px 30px;
+      border: 2px dashed #7C5EFF;
+      border-radius: 25px;
+      background: #FEFEFE;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .print-btn:hover {
+      background: #7C5EFF;
+      color: #FFFFFF;
+    }
+
+</style>
+</head>
+<body>
+<div class="row">
+  <div class="left">
+    <div class="camera-txt">
+      <p>Design Your Picture</p>
+    </div>
+    <div class="center">
+      <div class="camera">
+        <canvas id="canvas"></canvas>
+      </div>
+      <div class="button-print">
+        <button class="print" onclick="showPopup()">Print</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="design">
+    <!-- Background Dropdown -->
+    <div class="background">
+      <div class="dropdown_background">
+        <button class="dropdown_button background" id="dropdownButtonBackground">
+          <div>Border</div>
+          <div class="triangle"></div>
+        </button>
+        <div class="dropdown_content background" id="dropdownBackground">
+          <div class="sticker-grid" id="backgroundWrapper"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sticker Dropdown -->
+<div class="sticker">
+  <div class="dropdown_sticker">
+    <button class="dropdown_button sticker">
+      <span class="btn-text">Stickers</span>
+      <div class="triangle"></div>
+    </button>
+    <div class="dropdown_content sticker">
+      <div class="category">
+        <div class="sticker-buttons">
+          <button class="btn sticker" data-category="org">School Organization</button>
+          <button class="btn sticker" data-category="Holidays">Holidays</button>
+          <button class="btn sticker" data-category="Animals">Animals</button>
+          <button class="btn sticker" data-category="Foods">Foods & Drinks</button>
+          <button class="btn sticker" data-category="Others">Others</button>
+        </div>
+      </div>
+      <div class="sticker-scroll">
+        <div class="sticker-grid" id="stickerWrapper"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <!-- Filter Dropdown -->
+    <div class="filter">
+      <div class="dropdown_filter">
+        <button class="dropdown_button filter" id="dropdownButtonFilter">
+          <div>Filters</div>
+          <div class="triangle"></div>
+        </button>
+        <div class="dropdown_content filter" id="dropdownFilter">
+          <div class="sticker-grid" id="filterWrapper"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="pop" id="pop">
+  <div class="popup">
+  <button class="back" onclick="hidePopup()">◀ Go Back</button>
+
+  <h2>Here’s Your Image</h2>
+
+  
+  <div class="image-container">
+    <div class="image-grid">
+        <img id = "previewImage" class = "preview-Image" alt="Your Photo">
+    </div>
+  </div>
+
+  <p class="question">Are you satisfied with the design?</p>
+
+  <button class="print-btn" onclick= "download()">Print My Picture</button>
+</div>
+</div>
+
+
+
+
+
+
+  <!-- PARA SA BACKGROUND -->
+<script>
+  // 🌆 Replace with your GitHub repo for backgrounds
+  const backgroundBaseURL = "https://cdn.jsdelivr.net/gh/allysandraredondo/stickers-lib/backgrounds/";
+
+  // 🖼️ List of background image filenames
+  const backgrounds = [
+    "bg1.jpg",
+    "bg2.jpg",
+    "bg3.jpg",
+    "bg4.jpg",
+    "bg5.jpg",
+    "bg6.jpg",
+    "bg7.jpg",
+    "bg8.jpg"
+  ];
+
+  // 🎨 Add backgrounds dynamically
+  const backgroundWrapper = document.getElementById("backgroundWrapper");
+  backgrounds.forEach(bgFile => {
+    const img = document.createElement("img");
+    img.src = backgroundBaseURL + bgFile;
+    img.dataset.img = backgroundBaseURL + bgFile;
+    img.classList.add("sticker-item"); // reuse same style
+    img.addEventListener("click", () => changeBackground(img));
+    backgroundWrapper.appendChild(img);
+  });
+
+  // 🧩 Function to change Fabric.js canvas background
+  function changeBackground(el) {
+    const imgUrl = el.getAttribute("data-img");
+    fabric.Image.fromURL(imgUrl, function(img) {
+      canvas.setBackgroundImage(
+        img,
+        canvas.renderAll.bind(canvas),
+        {
+          scaleX: canvas.width / img.width,
+          scaleY: canvas.height / img.height,
+          originX: "left",
+          originY: "top"
+        }
+      );
+    }, { crossOrigin: "anonymous" });
+  }
+</script>
+
+
+
+<!-- PARA MA DISPLAY YUNG IMAGE -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
+
+<script>
+  const canvas = new fabric.Canvas("canvas");
+
+  // ✅ Load selected photos from localStorage
+  const photos = JSON.parse(localStorage.getItem("designPhotos")) || [];
+
+  if (photos.length === 0) {
+    alert("No photos found. Please select photos first.");
+    window.location.href = "/photoselection";
+  }
+  
+  // ✅ Canvas setup
+  canvas.setWidth(850);
+  canvas.setHeight(550);
+  canvas.setBackgroundColor("white", canvas.renderAll.bind(canvas));
+
+  // ✅ Fixed slot positions
+  function getSlotPositions(photoCount) {
+      if (photoCount === 1) {
+        return [{ x: 20, y: 20, width: 810, height: 510 }];
+      }
+
+      if (photoCount === 2) {
+        return [
+          { x: 20,  y: 20, width: 395, height: 510 },
+          { x: 435, y: 20, width: 395, height: 510 }
+        ];
+      }
+
+      if (photoCount === 4) {
+        return [
+          { x: 20,  y: 20,  width: 390, height: 240 },
+          { x: 435, y: 20,  width: 390, height: 240 },
+          { x: 20,  y: 285, width: 390, height: 240 },
+          { x: 435, y: 285, width: 390, height: 240 }
+        ];
+      }
+
+    return [{ x: 275, y: 75, width: 300, height: 400 }];
+  }
+
+  // ✅ Load and *fix-size* photos into layout
+  function loadPhotos() {
+    const slots = getSlotPositions(photos.length);
+
+    photos.forEach((photoSrc, i) => {
+      const slot = slots[i] || slots[slots.length - 1];
+
+      fabric.Image.fromURL(photoSrc, (img) => {
+        // Force image to exactly match slot (no preserve aspect ratio)
+        img.set({
+          left: slot.x,
+          top: slot.y,
+          scaleX: slot.width / img.width,
+          scaleY: slot.height / img.height,
+          selectable: false,
+          evented: false,
+          originX: "left",
+          originY: "top"
+        });
+
+        canvas.add(img);
+        canvas.renderAll();
+      });
+    });
+  }
+
+  loadPhotos();
+</script>
+
+
+
+
+
+  <!-- PARA SA STICKERS -->
+  <script>
+    // 🧩 Replace this with your GitHub Pages sticker URL
+    const baseURL = "https://cdn.jsdelivr.net/gh/allysandraredondo/stickers-lib/images/";
+
+    // 🖼️ List of your sticker image filenames
+ const categories = {
+  org: {
+    "IBITS": [
+      "cat_1.png", "cat_2.png", "cat_3.png", "cat_4.png", "cat_5.png",
+      "dog_1.png", "dog_2.png", "dog_3.png", "dog_4.png", "dog_5.png"
+    ],
+    "YES": [
+      "dog_1.png", "dog_2.png", "dog_3.png", "dog_4.png", "dog_5.png"
+    ],
+    "ACES": [
+      "cat_1.png", "cat_2.png", "cat_3.png", "cat_4.png", "cat_5.png"
+    ],
+    "JPIA": [
+      "dog_1.png", "dog_2.png", "dog_3.png", "dog_4.png", "dog_5.png"
+    ],
+    "PIIE": [
+      "cat_1.png", "cat_2.png", "cat_3.png", "cat_4.png", "cat_5.png"
+    ],
+    "SMS": [
+      "dog_1.png", "dog_2.png", "dog_3.png", "dog_4.png", "dog_5.png"
+    ],
+    "HRSS": [
+      "cat_1.png", "cat_2.png", "cat_3.png", "cat_4.png", "cat_5.png"
+    ],
+    "PUP": [
+      "dog_1.png", "dog_2.png", "dog_3.png", "dog_4.png", "dog_5.png"
+    ]
+  },
+  Holidays: {
+    "Halloween": [
+      "cat_1.png", "cat_2.png", "cat_3.png", "cat_4.png", "cat_5.png"
+    ],
+    "Christmas": [
+      "dog_1.png", "dog_2.png", "dog_3.png", "dog_4.png", "dog_5.png"
+    ],
+    "Valentines": [
+      "cat_1.png", "cat_2.png", "cat_3.png", "cat_4.png", "cat_5.png"
+    ],
+    "New Year": [
+      "dog_1.png", "dog_2.png", "dog_3.png", "dog_4.png", "dog_5.png"
+    ]
+  },
+  Animals: {
+    "Cats": [
+      "cat_1.png", "cat_2.png", "cat_3.png", "cat_4.png", "cat_5.png",
+      "dog_1.png", "dog_2.png", "dog_3.png", "dog_4.png", "dog_5.png"
+    ],
+    "Dogs": [
+      "dog_1.png", "dog_2.png", "dog_3.png", "dog_4.png", "dog_5.png"
+    ],
+    "Rabbits": [
+      "cat_1.png", "cat_2.png", "cat_3.png", "cat_4.png", "cat_5.png"
+    ],
+    "Frogs": [
+      "dog_1.png", "dog_2.png", "dog_3.png", "dog_4.png", "dog_5.png"
+    ],
+    "Bears": [
+      "cat_1.png", "cat_2.png", "cat_3.png", "cat_4.png", "cat_5.png"
+    ],
+    "Pandas": [
+      "dog_1.png", "dog_2.png", "dog_3.png", "dog_4.png", "dog_5.png"
+    ],
+    "Horses": [
+      "cat_1.png", "cat_2.png", "cat_3.png", "cat_4.png", "cat_5.png"
+    ]
+  },
+  Foods: {
+    "Foods": [
+      "cat_1.png", "cat_2.png", "cat_3.png", "cat_4.png", "cat_5.png"
+    ],
+    "Drinks": [
+      "dog_1.png", "dog_2.png", "dog_3.png", "dog_4.png", "dog_5.png"
+    ],
+    "Desserts": [
+      "cat_1.png", "cat_2.png", "cat_3.png", "cat_4.png", "cat_5.png"
+    ],
+  },
+  Others: {
+    "Others": [
+      "cat_1.png", "cat_2.png", "cat_3.png", "cat_4.png", "cat_5.png"
+    ],
+    "Memes": [
+      "dog_1.png", "dog_2.png", "dog_3.png", "dog_4.png", "dog_5.png"
+    ],
+    "Brainrots": [
+      "cat_1.png", "cat_2.png", "cat_3.png", "cat_4.png", "cat_5.png"
+    ],
+    "Signs": [
+      "dog_1.png", "dog_2.png", "dog_3.png", "dog_4.png", "dog_5.png"
+    ]
+  },
+};
+
+const deleteImg = new Image();
+deleteImg.src = "https://cdn-icons-png.flaticon.com/512/5974/5974771.png";
+
+const stickerWrapper = document.getElementById("stickerWrapper");
+
+// 👇 Show all subcategories and their stickers
+function showStickers(category) {
+  stickerWrapper.innerHTML = ""; // clear old
+
+  const subcats = categories[category];
+  for (const [subName, stickers] of Object.entries(subcats)) {
+    // 🧾 Subcategory title
+    const title = document.createElement("h4");
+    title.textContent = subName;
+    title.style.fontFamily = "Lexend";
+    title.style.margin = "15px 0 5px 0";
+    title.style.textAlign = "left";
+    stickerWrapper.appendChild(title);
+
+    // 🖼️ Sticker grid for this subcategory
+    const grid = document.createElement("div");
+    grid.classList.add("sticker-grid");
+
+    stickers.forEach(stickerFile => {
+      const img = document.createElement("img");
+      img.src = baseURL + stickerFile;
+      img.dataset.img = baseURL + stickerFile;
+      img.classList.add("sticker-item");
+      img.addEventListener("click", () => addSticker(img));
+      grid.appendChild(img);
+    });
+
+    stickerWrapper.appendChild(grid);
+  }
+}
+
+// 🧠 Default load AI category
+showStickers("org");
+document.querySelector('[data-category="org"]').classList.add("active");
+
+// 🖱️ When clicking a main category button
+document.querySelectorAll(".btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    showStickers(btn.dataset.category);
+  });
+});
+
+// 🧩 Add sticker to canvas (Fabric.js)
+function addSticker(el) {
+  const imgUrl = el.getAttribute("data-img");
+  fabric.Image.fromURL(imgUrl, function(sticker) {
+    sticker.set({
+      left: 150,
+      top: 100,
+      scaleX: 0.3,
+      scaleY: 0.3,
+      selectable: true
+    });
+
+    sticker.controls.deleteControl = new fabric.Control({
+      x: 0.5,
+      y: -0.5,
+      offsetY: -16,
+      offsetX: 16,
+      cursorStyle: 'pointer',
+      mouseUpHandler: function(_, transform) {
+        canvas.remove(transform.target);
+        canvas.requestRenderAll();
+      },
+      render: function(ctx, left, top) {
+        const size = 20;
+        ctx.drawImage(deleteImg, left - size / 2, top - size / 2, size, size);
+      }
+    });
+
+    canvas.add(sticker).setActiveObject(sticker);
+  }, { crossOrigin: 'anonymous' });
+}
+</script>
+
+<script>
+// 🩵 Dropdown logic for open/close
+document.querySelectorAll(".dropdown_button").forEach(button => {
+  button.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const dropdown = button.nextElementSibling;
+    dropdown.classList.toggle("show");
+    button.classList.toggle('active'); 
+  });
+});
+
+// Close dropdowns when clicking outside
+window.addEventListener("click", (event) => {
+  if (!event.target.closest(".dropdown_background") &&
+      !event.target.closest(".dropdown_sticker") &&
+      !event.target.closest(".dropdown_filter")) {
+    document.querySelectorAll(".dropdown_content").forEach(drop => {
+      drop.classList.remove("show");
+      drop.previousElementSibling.classList.remove("active");
+    });
+  }
+});
+
+</script>
+
+<!-- DOWNLOADING IMAGE -->
+<script>
+function download() {
+    // Save image from canvas
+    const imageData = canvas.toDataURL("image/jpeg");
+
+    fetch("/save_photo", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ image: imageData })
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log("Photo saved:", data.filename);
+        // Simulate printing (can use window.print if needed)
+        // Redirect to waiting page
+        window.location.href = "/waiting";
+    });
+}
+</script>
+
+
+
+<!-- CONFORMATION PAGE -->
+<script>
+var div = document.getElementById('pop');
+var previewImg = document.getElementById('previewImage');
+
+function showPopup(){
+  // Show popup
+  div.style.display = 'block';
+
+  // Save the image + show preview
+  const imageData = canvas.toDataURL("image/png");
+  previewImg.src = imageData; // ✅ show in popup
+}
+
+function hidePopup(){
+  div.style.display = 'none';
+}
+</script>
+
+
+</body>
+</html>
